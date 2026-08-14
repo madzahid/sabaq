@@ -74,4 +74,6 @@ Made for those memorising the Quran, with the intention of sadaqah jariyah.
 
 ## Licence
 
-Code: MIT © Zahid Abbasi. The Quranic text belongs to no one.
+Code: MIT © Zahid Abbasi.
+
+The Quranic text is the word of Allah ﷻ, sent for all mankind. It is not ours to licence, and no claim is made over it.
