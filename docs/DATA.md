@@ -4,7 +4,7 @@
 
 | Dataset | Source | Rows |
 |---|---|---|
-| 16-line page layout | QUL — *Indopak 16 lines (Taj company)* | 8,742 lines / 548 pages |
+| 16-line page layout | QUL — *Indopak 16 lines* | 8,742 lines / 548 pages |
 | Indo-Pak word text | QUL — *Indopak Nastaleeq, word by word* | 83,668 words |
 | Tajweed annotations | Uthmani tajweed script (via `alfurqan`) | 59,877 spans |
 

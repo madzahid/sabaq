@@ -9,7 +9,7 @@ Both from https://qul.tarteel.ai (free, no account needed):
 
 | File | Where |
 |---|---|
-| `taj-indopak-16-lines.db` | Resources → Mushaf layouts → *Indopak 16 lines layout (Taj company)* |
+| `taj-indopak-16-lines.db` | Resources → Mushaf layouts → *Indopak 16 lines layout* |
 | `indopak-nastaleeq.db` | Resources → Quran script → *Indopak Nastaleeq script — Word by Word* |
 
 They are gitignored because they are third-party data; the built database is

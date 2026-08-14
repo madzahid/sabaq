@@ -14,25 +14,63 @@ body {
   font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
 }
 
-/* ---- toolbar ---- */
-.bar {
+/* ---- site header (web) ---- */
+.site-head {
   position: sticky; top: 0; z-index: 9;
-  display: flex; gap: 9px; align-items: center; flex-wrap: wrap;
-  padding: 10px 16px;
-  background: var(--accent); color: #f0ece3;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  display: flex; align-items: center; gap: 16px;
+  padding: 10px 20px;
   padding-top: calc(10px + env(safe-area-inset-top));
+  background: var(--accent); color: #f0ece3;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
-.bar input, .bar button {
-  font-size: 13px; padding: 6px 10px; border-radius: 6px;
-  border: 1px solid rgba(255,255,255,.28);
-  background: rgba(255,255,255,.1); color: #fff;
+.brand { display: flex; align-items: baseline; gap: 9px; text-decoration: none; color: inherit; }
+.brand-ar { font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', serif; font-size: 26px; line-height: 1; }
+.brand-en { font-size: 11px; letter-spacing: .19em; text-transform: uppercase; color: var(--gold); }
+
+.site-nav { display: flex; align-items: center; gap: 7px; margin-inline-start: auto; }
+.site-nav button, .site-actions button {
+  cursor: pointer; font: inherit; font-size: 13px; font-weight: 600;
+  padding: 6px 11px; border-radius: 7px;
+  border: 1px solid rgba(255,255,255,.24);
+  background: rgba(255,255,255,.09); color: #fff;
 }
-.bar input { width: 76px; }
-.bar button { cursor: pointer; background: var(--gold); border-color: var(--gold); font-weight: 600; }
-.bar button.on { background: #f0e6cd; color: #6b5320; }
-.spacer { flex: 1; }
-.count { font-size: 12.5px; opacity: .9; }
+.site-nav button:hover, .site-actions button:hover { background: rgba(255,255,255,.17); }
+.site-actions button.primary { background: var(--gold); border-color: var(--gold); }
+.site-actions button.primary.on { background: #f0e6cd; color: #6b5320; }
+
+.pagebox { display: flex; align-items: center; gap: 6px; direction: ltr; }
+.pagebox input {
+  width: 62px; font: inherit; font-size: 13px; text-align: center;
+  padding: 6px 8px; border-radius: 7px;
+  border: 1px solid rgba(255,255,255,.24);
+  background: rgba(255,255,255,.09); color: #fff;
+}
+.pagebox .of { font-size: 12px; opacity: .6; }
+
+.site-actions { display: flex; align-items: center; gap: 9px; }
+.count { font-size: 12px; padding: 4px 10px; border-radius: 20px; background: rgba(255,255,255,.13); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---- site footer (web only) ---- */
+.site-foot {
+  max-width: 790px; margin: 34px auto 0; padding: 26px 20px 44px;
+  border-top: 1px solid var(--rule); text-align: center;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  color: #7c8783;
+}
+.site-foot a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
+.site-foot a:hover { border-bottom-color: var(--accent); }
+.foot-main { margin: 0 0 6px; font-size: 14.5px; color: var(--ink); }
+.foot-sub {
+  margin: 0 0 16px; font-size: 15px; line-height: 2;
+  font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', serif;
+}
+.foot-links { display: flex; justify-content: center; gap: 10px; font-size: 13px; margin-bottom: 14px; }
+.foot-legal { margin: 0; font-size: 11.5px; opacity: .75; line-height: 1.9; }
 
 /* ---- page ---- */
 .sheet {
@@ -89,4 +127,7 @@ body {
 @media (max-width: 620px) {
   .sheet { padding: 10px 14px 12px; margin: 10px 8px; }
   :root { --line-h: 46px; --ar-size: 21px; }
+  .site-head { gap: 10px; padding: 9px 12px; }
+  .brand-en { display: none; }
+  .site-foot { padding: 22px 16px 36px; }
 }

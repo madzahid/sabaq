@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "pipeline": "node pipeline/build.js",
-    "cap:sync": "npm run build && cap sync"
+    "cap:sync": "npm run build && cap sync",
+    "prebuild": "node scripts/copy-wasm.js",
+    "predev": "node scripts/copy-wasm.js"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -20,8 +22,20 @@
     "@capacitor/core": "^6.1.2",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
+    "@types/sql.js": "^1.4.11",
     "@vitejs/plugin-react": "^4.3.1",
     "typescript": "^5.5.4",
     "vite": "^5.4.2"
-  }
+  },
+  "description": "A 16-line Indo-Pak Mushaf reader built for hifz — and for the person listening to a student recite.",
+  "author": {
+    "name": "Zahid Abbasi",
+    "url": "https://xuro.net"
+  },
+  "homepage": "https://xuro.net",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/madzahid/sabaq.git"
+  },
+  "license": "MIT"
 }

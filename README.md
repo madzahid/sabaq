@@ -7,7 +7,7 @@ the child, listening.
 
 ## What it is
 
-A pixel-faithful **16-line Indo-Pak Mushaf** (Taj Company layout) with
+A pixel-faithful **16-line Indo-Pak Mushaf** with
 colour-coded tajweed, where every word is individually addressable. That last
 part is what makes the real features possible:
 
@@ -32,18 +32,18 @@ Reader and hifz mode work. Listening mode is next.
     npm install
     npm run dev
 
-## Data sources
+## Data
 
-All content comes from the [Quranic Universal Library](https://qul.tarteel.ai):
+Layout, word text and tajweed annotations are rebuilt from open datasets by the
+scripts in `pipeline/`. Text should be validated against an authoritative
+printed edition before release — see `docs/DATA.md`.
 
-- Indopak 16 lines layout (Taj Company)
-- Indopak Nastaleeq script, word by word
-- Tajweed annotations via the Uthmani tajweed script
+## Author
 
-Text should be validated against an authoritative printed edition before
-release. See `docs/DATA.md`.
+Built by **Zahid Abbasi** — [xuro.net](https://xuro.net)
+
+Made for those memorising the Quran, with the intention of sadaqah jariyah.
 
 ## Licence
 
-Code: MIT. Quranic text belongs to no one and is used with attribution to the
-sources above.
+Code: MIT © Zahid Abbasi. The Quranic text belongs to no one.

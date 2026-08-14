@@ -10,7 +10,7 @@ interface Props {
 }
 
 /**
- * Renders one page exactly as the Taj Company 16-line Mushaf prints it.
+ * Renders one page exactly as the printed 16-line Mushaf sets it.
  * Line breaks come from the layout table and are never computed here.
  */
 export default function MushafPage({ page, marked, peeked, onTapWord }: Props) {

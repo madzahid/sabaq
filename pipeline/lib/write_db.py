@@ -48,8 +48,8 @@ def main() -> None:
     ])
 
     db.executemany("INSERT INTO meta VALUES (?,?)", [
-        ("layout", "Indopak 16 lines (Taj Company) — QUL"),
-        ("script", "Indopak Nastaleeq word-by-word — QUL"),
+        ("layout", "Indopak 16 lines"),
+        ("script", "Indopak Nastaleeq, word by word"),
         ("pages", "548"), ("lines_per_page", "16"),
     ])
     db.commit()
