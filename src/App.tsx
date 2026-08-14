@@ -1,27 +1,33 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { PAGE_COUNT, getPage, open } from './db/quran'
 import { useHifzMode } from './features/useHifzMode'
 import { useListening } from './features/useListening'
+import { useLocale } from './i18n/useLocale'
+import { loadLastPage, saveLastPage } from './lib/lastPage'
 import { isWeb } from './lib/platform'
 import MushafPage from './components/MushafPage'
 import SiteHeader from './components/SiteHeader'
 import SiteFooter from './components/SiteFooter'
 import type { Page } from './types'
 
-const START_PAGE = 363
-
 export default function App() {
   const [page, setPage] = useState<Page | null>(null)
-  const [pageNo, setPageNo] = useState(START_PAGE)
+  // Page 1 for a new reader, otherwise wherever they left off.
+  const [pageNo, setPageNo] = useState(loadLastPage)
   const [error, setError] = useState<string | null>(null)
 
+  // Captured once so the open-on-mount effect does not re-run as the reader
+  // turns pages. The database is opened exactly once per session.
+  const openAt = useRef(pageNo)
+
+  const { t } = useLocale()
   const hifz = useHifzMode()
   const listening = useListening()
   const web = isWeb()
 
   useEffect(() => {
     open()
-      .then(() => setPage(getPage(START_PAGE)))
+      .then(() => setPage(getPage(openAt.current)))
       .catch((e: Error) => setError(e.message))
   }, [])
 
@@ -30,6 +36,7 @@ export default function App() {
     const clamped = Math.min(PAGE_COUNT, Math.max(1, n))
     setPageNo(clamped)
     setPage(getPage(clamped))
+    saveLastPage(clamped)
     window.scrollTo({ top: 0 })
   }, [])
 
@@ -38,8 +45,8 @@ export default function App() {
     else listening.mark(id)
   }, [hifz, listening])
 
-  if (error) return <div className="msg">ڈیٹا لوڈ نہیں ہوا: {error}</div>
-  if (!page) return <div className="msg">لوڈ ہو رہا ہے…</div>
+  if (error) return <div className="msg">{t.loadFailed(error)}</div>
+  if (!page) return <div className="msg">{t.loading}</div>
 
   return (
     <div className={hifz.active ? 'app blur' : 'app'}>

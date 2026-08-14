@@ -7,11 +7,14 @@
 
 * { box-sizing: border-box; }
 
+/* The UI chrome is sans-serif in all three languages. The Nastaleeq face is
+   the Mushaf's, and is applied to .sheet and to Urdu prose only — setting it
+   on body made the English UI render in a Quranic typeface. */
 body {
   margin: 0;
   background: var(--shell);
   color: var(--ink);
-  font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 /* ---- site header (web) ---- */
@@ -50,6 +53,28 @@ body {
 .site-actions { display: flex; align-items: center; gap: 9px; }
 .count { font-size: 12px; padding: 4px 10px; border-radius: 20px; background: rgba(255,255,255,.13); }
 
+/* ---- language switcher ----
+   Always ltr so the order اردو · EN · عربي is the same in every language and
+   the control does not jump when the UI direction flips. */
+.langsel {
+  display: flex; gap: 2px; padding: 2px; direction: ltr;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.24);
+  background: rgba(255,255,255,.09);
+}
+.site-actions .langsel button {
+  border: 0; background: transparent; color: #fff;
+  font-size: 12px; font-weight: 600; opacity: .72;
+  padding: 4px 9px; border-radius: 6px; line-height: 1.4;
+}
+.site-actions .langsel button:hover { background: rgba(255,255,255,.15); opacity: 1; }
+.site-actions .langsel button.on { background: #fff; color: var(--accent); opacity: 1; }
+.site-actions .langsel button[lang="ur"],
+.site-actions .langsel button[lang="ar"] {
+  font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', serif;
+  font-size: 14px; padding-bottom: 6px;
+}
+
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -65,15 +90,18 @@ body {
 .site-foot a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
 .site-foot a:hover { border-bottom-color: var(--accent); }
 .foot-main { margin: 0 0 6px; font-size: 14.5px; color: var(--ink); }
-.foot-sub {
-  margin: 0 0 16px; font-size: 15px; line-height: 2;
+.foot-sub { margin: 0 0 16px; font-size: 14.5px; line-height: 1.75; }
+html[lang="ur"] .foot-sub {
+  font-size: 15px; line-height: 2;
   font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', serif;
 }
+.author { white-space: nowrap; }
 .foot-links { display: flex; justify-content: center; gap: 10px; font-size: 13px; margin-bottom: 14px; }
 .foot-legal { margin: 0; font-size: 11.5px; opacity: .75; line-height: 1.9; }
 
 /* ---- page ---- */
 .sheet {
+  font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
   max-width: 790px; margin: 18px auto;
   background: var(--paper); padding: 12px 34px 16px;
   box-shadow: 0 3px 18px rgba(0,0,0,.10); border-radius: 3px;
@@ -129,5 +157,9 @@ body {
   :root { --line-h: 46px; --ar-size: 21px; }
   .site-head { gap: 10px; padding: 9px 12px; }
   .brand-en { display: none; }
+  .site-actions { gap: 6px; }
+  .site-actions .langsel button { padding: 4px 6px; font-size: 11px; }
+  .site-actions .langsel button[lang="ur"],
+  .site-actions .langsel button[lang="ar"] { font-size: 13px; }
   .site-foot { padding: 22px 16px 36px; }
 }

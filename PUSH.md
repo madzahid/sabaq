@@ -28,7 +28,8 @@ git push -u origin main
     npm install
     npm run dev
 
-Browser mein safha 363 khul jayega.
+Browser mein pehla safha khul jayega. Dobara aane par wahi safha
+khulega jahan aap ne chhora tha.
 
 Note: `data/source/*.db` gitignore mein hain (woh QUL ka data hai, aap ka nahi).
 Bani hui `public/data/quran.sqlite` commit ho chuki hai, is liye app foran chalti hai.

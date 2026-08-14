@@ -1,6 +1,10 @@
 /* Tajweed palette — sampled from the printed 16-line colour Mushaf.
    Changing colours must never require touching component code. */
 :root {
+  /* Force light rendering of scrollbars and form controls even when the OS
+     is in dark mode, otherwise the page number input goes dark on white. */
+  color-scheme: light;
+
   --ink:      #1a1a1a;
   --ghunnah:  #e0201b;  /* غنہ · ادغام بغنہ · ادغام شفوی */
   --ikhfa:    #e5148c;  /* اخفا · اخفا شفوی · اقلاب       */
@@ -23,9 +27,7 @@
   --ar-size:  26px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ink: #e9e6df; --paper: #14161a; --shell: #0d0f12;
-    --rule: #2b2f36; --silent: #6b7178;
-  }
-}
+/* No dark theme. The Mushaf is a printed page: the paper is white, and the
+   tajweed palette is sampled from ink on white. Inverting it changes what the
+   colours mean and breaks page fidelity. If a night mode is ever added it has
+   to be a designed palette, not an inversion of this one. */
