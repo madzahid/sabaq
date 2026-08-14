@@ -109,3 +109,15 @@ export function loadLocale(): Locale {
 export function saveLocale(locale: Locale): void {
   write(STORAGE_KEY, locale)
 }
+
+/**
+ * Write the detected locale only if the reader has never had one stored.
+ *
+ * localStorage is shared by every tab on the origin, so an unconditional write
+ * on mount lets a tab that was opened earlier clobber a language the reader
+ * chose in another tab a moment ago. Only the genuine first run needs this;
+ * after that, setLocale is the only thing allowed to write.
+ */
+export function persistLocaleIfUnset(locale: Locale): void {
+  if (read(STORAGE_KEY) === null) write(STORAGE_KEY, locale)
+}

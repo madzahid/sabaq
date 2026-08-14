@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { PAGE_COUNT, getPage, open } from './db/quran'
 import { useHifzMode } from './features/useHifzMode'
 import { useListening } from './features/useListening'
+import { usePageTurn } from './features/usePageTurn'
 import { useLocale } from './i18n/useLocale'
 import { loadLastPage, saveLastPage } from './lib/lastPage'
 import { isWeb } from './lib/platform'
@@ -40,6 +41,10 @@ export default function App() {
     window.scrollTo({ top: 0 })
   }, [])
 
+  const goPrev = useCallback(() => go(pageNo - 1), [go, pageNo])
+  const goNext = useCallback(() => go(pageNo + 1), [go, pageNo])
+  usePageTurn(goPrev, goNext)
+
   const onTapWord = useCallback((id: number) => {
     if (hifz.active) hifz.peek(id)
     else listening.mark(id)
@@ -52,16 +57,19 @@ export default function App() {
     <div className={hifz.active ? 'app blur' : 'app'}>
       <SiteHeader
         pageNo={pageNo}
+        surah={page.surah}
+        juz={page.juz}
         onGo={go}
         hifzActive={hifz.active}
         onToggleHifz={hifz.toggle}
         luqmaCount={listening.luqmaCount}
+        ataknaCount={listening.ataknaCount}
       />
 
       <main>
         <MushafPage
           page={page}
-          marked={new Set(listening.mistakes.map((m) => m.wordId))}
+          marked={listening.kinds}
           peeked={hifz.peeked}
           onTapWord={onTapWord}
         />

@@ -20,8 +20,16 @@
   --accent:   #12594a;
   --gold:     #9a7b32;
 
-  --mark-bg:  #fdf0c9;
-  --mark-line:#d9a406;
+  /* لقمہ — had to be prompted. The original amber, filled, with a solid rule. */
+  --mark-bg:    #fdf0c9;
+  --mark-line:  #d9a406;
+  /* اٹکنا — faltered but recovered alone. Red, and nothing but a dashed rule:
+     no fill. Told apart from لقمہ by colour AND form, so it reads at a glance,
+     which is the only way a listener ever reads it.
+     This red sits near --ghunnah, which colours letters for a tajweed rule.
+     They do not collide because they use different channels: tajweed colours
+     the GLYPHS, this marks the rule BENEATH the word. */
+  --atakna-line:#cf2118;
 
   --line-h:   56px;
   --ar-size:  26px;

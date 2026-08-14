@@ -1,10 +1,11 @@
 import { memo } from 'react'
-import type { Word as WordModel } from '../types'
+import type { MistakeKind, Word as WordModel } from '../types'
 import { segments } from '../lib/tajweed'
 
 interface Props {
   word: WordModel
-  marked: boolean
+  /** Which mistake was recorded here, if any. */
+  marked: MistakeKind | undefined
   peeked: boolean
   onTap: (id: number) => void
 }
@@ -19,7 +20,7 @@ function WordView({ word, marked, peeked, onTap }: Props) {
     return <span className="w num" aria-hidden="true">{word.text}</span>
   }
 
-  const cls = ['w', marked && 'mark', peeked && 'peek'].filter(Boolean).join(' ')
+  const cls = ['w', marked && `mark ${marked}`, peeked && 'peek'].filter(Boolean).join(' ')
 
   return (
     <span

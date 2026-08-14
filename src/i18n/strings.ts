@@ -22,6 +22,9 @@ export interface Strings {
     prev: string
     next: string
     pageNumber: string
+    surah: string
+    juz: string
+    page: string
   }
 
   /** Juz label in the page header, e.g. "پارہ 21". */
@@ -29,6 +32,8 @@ export interface Strings {
 
   hifzMode: string
   luqma: (n: number) => string
+  /** اٹکنا — faltered but recovered without being prompted. */
+  atakna: (n: number) => string
 
   language: string
 
@@ -54,20 +59,24 @@ const ur: Strings = {
     prev: 'پچھلا صفحہ',
     next: 'اگلا صفحہ',
     pageNumber: 'صفحہ نمبر',
+    surah: 'سورت',
+    juz: 'پارہ',
+    page: 'صفحہ',
   },
   juz: 'پارہ',
   hifzMode: 'حفظ موڈ',
   luqma: (n) => `لقمے ${n}`,
+  atakna: (n) => `اٹکے ${n}`,
   language: 'زبان',
   loading: 'لوڈ ہو رہا ہے…',
   loadFailed: (reason) => `ڈیٹا لوڈ نہیں ہوا: ${reason}`,
   footer: {
-    creditBefore: 'بنایا ہے ',
-    creditAfter: ' نے',
+    creditBefore: '',
+    creditAfter: ' نے بنایا ہے',
     tagline: 'حفظ کرنے والوں کے لیے، صدقۂ جاریہ کی نیت سے۔',
     linksLabel: 'روابط',
     about: 'تعارف',
-    legalAfterName: ' · 16 سطری اِنڈوپاک مصحف · قرآنی متن مستند نسخوں سے',
+    legalAfterName: '',
   },
 }
 
@@ -78,10 +87,14 @@ const en: Strings = {
     prev: 'Previous page',
     next: 'Next page',
     pageNumber: 'Page number',
+    surah: 'Surah',
+    juz: 'Juz',
+    page: 'Page',
   },
   juz: 'Juz',
   hifzMode: 'Hifz mode',
   luqma: (n) => (n === 1 ? '1 luqma' : `${n} luqmas`),
+  atakna: (n) => (n === 1 ? '1 atakna' : `${n} ataknas`),
   language: 'Language',
   loading: 'Loading…',
   loadFailed: (reason) => `Could not load the data: ${reason}`,
@@ -91,7 +104,7 @@ const en: Strings = {
     tagline: 'For those memorising the Quran — intended as sadaqah jariyah.',
     linksLabel: 'Links',
     about: 'About',
-    legalAfterName: ' · 16-line Indo-Pak Mushaf · Quranic text from verified copies',
+    legalAfterName: '',
   },
 }
 
@@ -102,20 +115,24 @@ const ar: Strings = {
     prev: 'الصفحة السابقة',
     next: 'الصفحة التالية',
     pageNumber: 'رقم الصفحة',
+    surah: 'السورة',
+    juz: 'الجزء',
+    page: 'الصفحة',
   },
   juz: 'الجزء',
   hifzMode: 'وضع الحفظ',
   luqma: (n) => `اللقمات ${n}`,
+  atakna: (n) => `التعثرات ${n}`,
   language: 'اللغة',
   loading: 'جارٍ التحميل…',
   loadFailed: (reason) => `تعذّر تحميل البيانات: ${reason}`,
   footer: {
-    creditBefore: 'أنشأه ',
+    creditBefore: 'من إنشاء ',
     creditAfter: '',
     tagline: 'لحفظة القرآن الكريم، بنيّة صدقة جارية.',
     linksLabel: 'روابط',
     about: 'تعريف',
-    legalAfterName: ' · مصحف إندوباك بستة عشر سطرًا · النص القرآني من نسخ موثّقة',
+    legalAfterName: '',
   },
 }
 

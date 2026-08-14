@@ -84,4 +84,75 @@ export function getPage(page: number): Page | null {
   }
 }
 
+/* ------------------------------------------------------------------ *
+ * Jump indexes
+ *
+ * A student says "Surah Yaseen" or "para 30", never "page 396". These map
+ * both onto page numbers.
+ *
+ * Deliberately NOT done as a SQL join of words against lines: there is no
+ * index on lines.first_word_id, so `w.id BETWEEN l.first_word_id AND
+ * l.last_word_id` degenerates into a scan of 83,668 x 8,742 rows inside
+ * sql.js. Instead each side is read once and matched with a binary search.
+ * ------------------------------------------------------------------ */
+
+export interface JumpEntry {
+  /** Surah or juz number. */
+  n: number
+  /** Page it starts on. */
+  page: number
+}
+
+let surahCache: JumpEntry[] | null = null
+let juzCache: JumpEntry[] | null = null
+
+/** Page each of the 114 surahs begins on. */
+export function surahIndex(): JumpEntry[] {
+  if (surahCache) return surahCache
+
+  // First real word of each surah. Markers are ayah-number glyphs, not words.
+  const firsts = rowsOf(
+    'SELECT surah, MIN(id) AS wid FROM words WHERE is_marker = 0 GROUP BY surah ORDER BY surah',
+  ).map((r) => ({ surah: r.surah as number, wid: r.wid as number }))
+
+  // Ayah lines in word order, so a word id can be located by binary search.
+  const spans = rowsOf(
+    `SELECT page, first_word_id AS a, last_word_id AS b FROM lines
+      WHERE type = 'ayah' AND first_word_id IS NOT NULL
+      ORDER BY first_word_id`,
+  ).map((r) => ({ page: r.page as number, a: r.a as number, b: r.b as number }))
+
+  const pageOf = (wid: number): number | null => {
+    let lo = 0
+    let hi = spans.length - 1
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1
+      const sp = spans[mid]
+      if (wid < sp.a) hi = mid - 1
+      else if (wid > sp.b) lo = mid + 1
+      else return sp.page
+    }
+    return null
+  }
+
+  const out: JumpEntry[] = []
+  for (const f of firsts) {
+    const page = pageOf(f.wid)
+    // Never invent a location. A surah we cannot place is left out of the
+    // menu rather than sending the reader to a wrong page.
+    if (page != null) out.push({ n: f.surah, page })
+  }
+
+  surahCache = out
+  return out
+}
+
+/** Page each of the 30 juz begins on. */
+export function juzIndex(): JumpEntry[] {
+  if (juzCache) return juzCache
+  juzCache = rowsOf('SELECT juz, MIN(page) AS page FROM pages GROUP BY juz ORDER BY juz')
+    .map((r) => ({ n: r.juz as number, page: r.page as number }))
+  return juzCache
+}
+
 export const PAGE_COUNT = 548

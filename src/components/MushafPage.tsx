@@ -1,11 +1,11 @@
-import type { Page } from '../types'
+import type { MistakeKind, Page } from '../types'
 import { SURAH_NAMES } from '../i18n/surahs'
 import { useLocale } from '../i18n/useLocale'
 import Word from './Word'
 
 interface Props {
   page: Page
-  marked: Set<number>
+  marked: Map<number, MistakeKind>
   peeked: Set<number>
   onTapWord: (id: number) => void
 }
@@ -56,7 +56,7 @@ export default function MushafPage({ page, marked, peeked, onTapWord }: Props) {
                   <Word
                     key={w.id}
                     word={w}
-                    marked={marked.has(w.id)}
+                    marked={marked.get(w.id)}
                     peeked={peeked.has(w.id)}
                     onTap={onTapWord}
                   />

@@ -2,7 +2,7 @@ import {
   createContext, useCallback, useContext, useEffect, useMemo, useState,
   type ReactNode,
 } from 'react'
-import { DIR, loadLocale, saveLocale, type Locale } from './locale'
+import { DIR, loadLocale, persistLocaleIfUnset, saveLocale, type Locale } from './locale'
 import { STRINGS, type Strings } from './strings'
 
 interface LocaleContextValue {
@@ -16,6 +16,16 @@ const LocaleContext = createContext<LocaleContextValue | null>(null)
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(loadLocale)
+
+  // Persist the detected locale on first run, not just explicit choices.
+  // public/about.html is a plain file that cannot import this module; giving
+  // it a value to read is what keeps it from re-implementing detection.
+  // Guarded, because every open tab runs this and localStorage is shared.
+  useEffect(() => {
+    persistLocaleIfUnset(locale)
+    // Intentionally first-run only; later changes are saved by setLocale.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // The <html> element is the single source of truth for direction. Setting it
   // here rather than in index.html is what lets the English build go ltr while
