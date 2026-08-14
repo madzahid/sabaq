@@ -1,0 +1,31 @@
+/* Tajweed palette — sampled from the printed 16-line colour Mushaf.
+   Changing colours must never require touching component code. */
+:root {
+  --ink:      #1a1a1a;
+  --ghunnah:  #e0201b;  /* غنہ · ادغام بغنہ · ادغام شفوی */
+  --ikhfa:    #e5148c;  /* اخفا · اخفا شفوی · اقلاب       */
+  --tafkheem: #1b7a3e;  /* تفخیم — حروفِ استعلاء، لفظ الجلالہ */
+  --qalqala:  #2ba6de;  /* قلقلہ                          */
+  --madd:     #3a5bd9;  /* مد — چاروں اقسام               */
+  --silent:   #a8adb2;  /* غیر ملفوظ · ہمزۃ الوصل · لام شمسیہ */
+
+  --frame:    #c2178f;
+  --rule:     #c9c4ba;
+  --paper:    #ffffff;
+  --shell:    #efece5;
+  --accent:   #12594a;
+  --gold:     #9a7b32;
+
+  --mark-bg:  #fdf0c9;
+  --mark-line:#d9a406;
+
+  --line-h:   56px;
+  --ar-size:  26px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e9e6df; --paper: #14161a; --shell: #0d0f12;
+    --rule: #2b2f36; --silent: #6b7178;
+  }
+}

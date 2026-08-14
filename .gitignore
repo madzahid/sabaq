@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+data/source/*.db
+data/source/*.zip
+.env
+ios/
+android/
