@@ -129,7 +129,7 @@ html[lang="ur"] .foot-sub {
 .sheet {
   font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
   max-width: 790px; margin: 18px auto;
-  background: var(--paper); padding: 12px 34px 16px;
+  background: var(--paper); padding: 12px 58px 16px;
   box-shadow: 0 3px 18px rgba(0,0,0,.10); border-radius: 3px;
 }
 .hdr {
@@ -140,7 +140,53 @@ html[lang="ur"] .foot-sub {
 .hdr .pageno { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; opacity: .7; }
 
 .frame { border: 1.5px solid var(--frame); padding: 3px; }
-.frame-in { border: .8px solid var(--frame); }
+.frame-in { border: .8px solid var(--frame); position: relative; }
+
+/* ---- margin marks ----
+   The printed Mushaf sets ruku, sajdah and the para quarters OUTSIDE the text
+   frame. They are positioned absolutely against the frame rather than inserted
+   into a line, so a mark can never shift a word: the line breaks are the
+   memory a student holds, and nothing in the margin may disturb them. */
+.gutter { position: absolute; top: 0; bottom: 0; width: 0; }
+/* Physical sides on purpose. The sheet is dir=rtl, and logical properties
+   flip under it — which put the marks INSIDE the frame. The scan is explicit:
+   the ruku sign is in the left margin and الربع in the right. */
+.gutter-ruku  { left: 0; }
+.gutter-marks { right: 0; }
+
+.mk {
+  position: absolute; height: var(--line-h);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', serif;
+  line-height: 1; white-space: nowrap; user-select: none;
+}
+.gutter-ruku  .mk { right: 100%; padding-right: 9px; }
+.gutter-marks .mk { left: 100%; padding-left: 9px; }
+
+.mk-ain { font-size: 18px; color: var(--ink); }
+.mk-n   { font-size: 11px; color: var(--ink); opacity: .8; font-family: ui-sans-serif, system-ui, sans-serif; }
+/* Set like the quarter words, but heavier: a sajdah is an act of worship,
+   not a navigation aid, and must be impossible to miss. */
+.mk-sajdah {
+  writing-mode: vertical-rl; text-orientation: mixed;
+  font-size: 15px; font-weight: 600; color: var(--mark-line);
+  height: auto; max-height: none;
+}
+
+/* Set vertically, the way the word is printed down the margin. */
+.mk-quarter {
+  writing-mode: vertical-rl; text-orientation: mixed;
+  font-size: 13px; color: var(--ink); opacity: .9;
+  height: auto; max-height: none;
+}
+
+/* منزل, printed at the foot of every page. */
+.manzil {
+  text-align: center; margin-top: 7px;
+  font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', serif;
+  font-size: 13px; color: var(--ink); opacity: .55;
+}
 
 .ln {
   display: flex; justify-content: space-between; align-items: center;
@@ -196,7 +242,10 @@ html[lang="ur"] .foot-sub {
 }
 
 @media (max-width: 620px) {
-  .sheet { padding: 10px 14px 12px; margin: 10px 8px; }
+  .sheet { padding: 10px 30px 12px; margin: 10px 8px; }
+  .mk-n { font-size: 8.5px; }
+  .mk-ain { font-size: 13px; }
+  .mk-quarter { font-size: 10.5px; }
   :root { --line-h: 46px; --ar-size: 21px; }
   .site-head { gap: 10px; padding: 9px 12px; flex-wrap: wrap; }
   .brand-en { display: none; }

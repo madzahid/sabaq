@@ -10,7 +10,8 @@
     "pipeline": "node pipeline/build.js",
     "cap:sync": "npm run build && cap sync",
     "prebuild": "node scripts/copy-wasm.js",
-    "predev": "node scripts/copy-wasm.js"
+    "predev": "node scripts/copy-wasm.js",
+    "markers": "python3 pipeline/lib/build_markers.py"
   },
   "dependencies": {
     "react": "^18.3.1",

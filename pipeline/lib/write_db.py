@@ -51,6 +51,12 @@ def main() -> None:
         ("layout", "Indopak 16 lines"),
         ("script", "Indopak Nastaleeq, word by word"),
         ("pages", "548"), ("lines_per_page", "16"),
+        # The printed Taj copy numbers its title page as 1 and starts
+        # Al-Fatiha on printed page 2, so printed = internal + 1. Verified
+        # against the 16-line scan: printed 21 is 2:142 (start of para 2),
+        # which is our page 20; printed 549 is the last text page, which is
+        # our 548. Nothing is missing — this is display only. See docs/DATA.md.
+        ("page_offset", "1"),
     ])
     db.commit()
     print(f"    {os.path.getsize(OUT) / 1048576:.2f} MB")

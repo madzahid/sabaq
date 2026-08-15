@@ -1,7 +1,17 @@
 import initSqlJs, { type Database } from 'sql.js'
-import type { Line, LineType, Page, Word } from '../types'
+import type { Line, LineType, Marker, MarkerKind, Page, Word } from '../types'
 
 let db: Database | null = null
+
+/**
+ * Difference between the page number printed in the Mushaf and our internal
+ * page index. Read from the database, never hardcoded: Taj has printed more
+ * than one edition, so this belongs to the data, not to a component.
+ *
+ * For the modelled copy it is 1 — the printed book numbers its title page as
+ * 1 and begins Al-Fatiha on printed page 2. Verified against the scan.
+ */
+let printedOffset = 0
 
 /** Opens the bundled database. Safe to call repeatedly. */
 export async function open(): Promise<void> {
@@ -12,6 +22,25 @@ export async function open(): Promise<void> {
   const res = await fetch(`${import.meta.env.BASE_URL}data/quran.sqlite`)
   if (!res.ok) throw new Error(`quran.sqlite missing (HTTP ${res.status})`)
   db = new SQL.Database(new Uint8Array(await res.arrayBuffer()))
+
+  const row = rowsOf("SELECT value FROM meta WHERE key = 'page_offset'")[0]
+  const n = Number(row?.value)
+  printedOffset = Number.isInteger(n) ? n : 0
+}
+
+/** The number printed in the Mushaf for one of our internal pages. */
+export function printedPage(page: number): number {
+  return page + printedOffset
+}
+
+/** Our internal page for a number the reader read off the printed Mushaf. */
+export function internalPage(printed: number): number {
+  return printed - printedOffset
+}
+
+/** First and last page numbers as printed, for input bounds. */
+export function printedRange(): [number, number] {
+  return [printedPage(1), printedPage(PAGE_COUNT)]
 }
 
 function rowsOf(sql: string, params: unknown[] = []): Record<string, unknown>[] {
@@ -75,12 +104,27 @@ export function getPage(page: number): Page | null {
     }
   })
 
+  const markers: Marker[] = rowsOf(
+    'SELECT line_no, kind, label, n_above, n_below FROM markers WHERE page = ? ORDER BY line_no',
+    [page],
+  ).map((r) => ({
+    lineNo: r.line_no as number,
+    kind: r.kind as MarkerKind,
+    label: (r.label as string) ?? null,
+    nAbove: (r.n_above as number) ?? null,
+    nBelow: (r.n_below as number) ?? null,
+  }))
+
+  const mz = rowsOf('SELECT manzil FROM page_manzil WHERE page = ?', [page])[0]
+
   return {
     page,
     juz: meta.juz as number,
     surah: meta.surah as number,
     firstAyah: meta.first_ayah as string,
     lines,
+    markers,
+    manzil: (mz?.manzil as number) ?? null,
   }
 }
 

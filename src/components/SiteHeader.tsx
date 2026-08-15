@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { PAGE_COUNT, juzIndex, surahIndex } from '../db/quran'
+import { internalPage, juzIndex, printedPage, printedRange, surahIndex } from '../db/quran'
 import { ENDONYM, LOCALES } from '../i18n/locale'
 import { SURAH_NAMES } from '../i18n/surahs'
 import { useLocale } from '../i18n/useLocale'
@@ -28,6 +28,10 @@ export default function SiteHeader({
   // Cached after the first call — see surahIndex() in db/quran.ts.
   const surahs = surahIndex()
   const juzs = juzIndex()
+
+  // The reader types the number printed in the Mushaf in front of them; every
+  // index inside the app stays internal. Conversion happens only here.
+  const [firstPrinted, lastPrinted] = printedRange()
 
   /**
    * Many surahs begin part-way down a page. Picking Yaseen lands on page 396,
@@ -93,10 +97,11 @@ export default function SiteHeader({
         <label className="pagebox">
           <span className="sr-only">{t.nav.pageNumber}</span>
           <input
-            type="number" min={1} max={PAGE_COUNT} value={pageNo}
-            onChange={(e) => onGo(Number(e.target.value))}
+            type="number" min={firstPrinted} max={lastPrinted}
+            value={printedPage(pageNo)}
+            onChange={(e) => onGo(internalPage(Number(e.target.value)))}
           />
-          <span className="of">/ {PAGE_COUNT}</span>
+          <span className="of">/ {lastPrinted}</span>
         </label>
 
         <button onClick={() => onGo(pageNo + 1)} aria-label={t.nav.next}>◀</button>

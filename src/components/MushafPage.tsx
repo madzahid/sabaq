@@ -1,4 +1,5 @@
-import type { MistakeKind, Page } from '../types'
+import type { Marker, MistakeKind, Page } from '../types'
+import { printedPage } from '../db/quran'
 import { SURAH_NAMES } from '../i18n/surahs'
 import { useLocale } from '../i18n/useLocale'
 import Word from './Word'
@@ -8,6 +9,34 @@ interface Props {
   marked: Map<number, MistakeKind>
   peeked: Set<number>
   onTapWord: (id: number) => void
+}
+
+/**
+ * One margin mark, placed against the line it belongs to.
+ *
+ * Positioned absolutely rather than inserted into the line, so that adding a
+ * mark can never change where a word sits. The page's line breaks are the
+ * memory a student is holding; nothing in the margin may disturb them.
+ */
+function MarginMark({ m }: { m: Marker }) {
+  const top = { top: `calc(${m.lineNo - 1} * var(--line-h))` }
+
+  if (m.kind === 'ruku') {
+    return (
+      <span className="mk mk-ruku" style={top} aria-hidden="true">
+        <b className="mk-n">{m.nAbove}</b>
+        <b className="mk-ain">ع</b>
+        <b className="mk-n">{m.nBelow}</b>
+      </span>
+    )
+  }
+
+  if (m.kind === 'sajdah') {
+    return <span className="mk mk-sajdah" style={top} aria-hidden="true">{m.label}</span>
+  }
+
+  // rub / nisf / thalatha — printed as a word, set vertically in the margin.
+  return <span className={`mk mk-quarter mk-${m.kind}`} style={top} aria-hidden="true">{m.label}</span>
 }
 
 /**
@@ -26,7 +55,7 @@ export default function MushafPage({ page, marked, peeked, onTapWord }: Props) {
       <header className="hdr">
         <span>{t.juz} {page.juz}</span>
         <span className="dash" />
-        <span className="pageno">{page.page}</span>
+        <span className="pageno">{printedPage(page.page)}</span>
         <span className="dash" />
         {/* Surah name stays Arabic in all three languages — it has to match the
             header printed in the Mushaf the student is holding. */}
@@ -35,6 +64,18 @@ export default function MushafPage({ page, marked, peeked, onTapWord }: Props) {
 
       <div className="frame">
         <div className="frame-in">
+          {/* Ruku signs sit in one margin, the quarter words and sajdah in the
+              other, matching where the printed copy puts them. */}
+          <div className="gutter gutter-ruku">
+            {page.markers.filter((m) => m.kind === 'ruku').map((m, i) => (
+              <MarginMark key={`r${i}`} m={m} />
+            ))}
+          </div>
+          <div className="gutter gutter-marks">
+            {page.markers.filter((m) => m.kind !== 'ruku').map((m, i) => (
+              <MarginMark key={`m${i}`} m={m} />
+            ))}
+          </div>
           {page.lines.map((line) => {
             if (line.type === 'surah_name') {
               return (
@@ -66,6 +107,10 @@ export default function MushafPage({ page, marked, peeked, onTapWord }: Props) {
           })}
         </div>
       </div>
+
+      {page.manzil != null && (
+        <div className="manzil" aria-hidden="true">منزل {page.manzil}</div>
+      )}
     </div>
   )
 }
