@@ -1,3 +1,4 @@
+import { uiDigits } from './digits'
 import type { Locale } from './locale'
 
 /**
@@ -65,15 +66,15 @@ const ur: Strings = {
   },
   juz: 'پارہ',
   hifzMode: 'حفظ موڈ',
-  luqma: (n) => `لقمے ${n}`,
-  atakna: (n) => `اٹکے ${n}`,
+  luqma: (n) => `${uiDigits(n, 'ur')} ${n === 1 ? 'لقمہ' : 'لقمے'}`,
+  atakna: (n) => `${uiDigits(n, 'ur')} اَٹْکَن`,
   language: 'زبان',
   loading: 'لوڈ ہو رہا ہے…',
   loadFailed: (reason) => `ڈیٹا لوڈ نہیں ہوا: ${reason}`,
   footer: {
     creditBefore: '',
-    creditAfter: ' نے بنایا ہے',
-    tagline: 'حفظ کرنے والوں کے لیے، صدقۂ جاریہ کی نیت سے۔',
+    creditAfter: ' کی ایک کاوش',
+    tagline: 'حفاظِ کرام اور اُن کے سننے والوں کے لیے — صدقۂ جاریہ کی نیت سے۔',
     linksLabel: 'روابط',
     about: 'تعارف',
     legalAfterName: '',
@@ -99,9 +100,9 @@ const en: Strings = {
   loading: 'Loading…',
   loadFailed: (reason) => `Could not load the data: ${reason}`,
   footer: {
-    creditBefore: 'Built by ',
+    creditBefore: 'A project by ',
     creditAfter: '',
-    tagline: 'For those memorising the Quran — intended as sadaqah jariyah.',
+    tagline: 'For those memorising the Quran, and for those who listen to them — as sadaqah jariyah.',
     linksLabel: 'Links',
     about: 'About',
     legalAfterName: '',
@@ -121,15 +122,15 @@ const ar: Strings = {
   },
   juz: 'الجزء',
   hifzMode: 'وضع الحفظ',
-  luqma: (n) => `اللقمات ${n}`,
-  atakna: (n) => `التعثرات ${n}`,
+  luqma: (n) => `اللقمات ${uiDigits(n, 'ar')}`,
+  atakna: (n) => `التعثرات ${uiDigits(n, 'ar')}`,
   language: 'اللغة',
   loading: 'جارٍ التحميل…',
   loadFailed: (reason) => `تعذّر تحميل البيانات: ${reason}`,
   footer: {
     creditBefore: 'من إنشاء ',
     creditAfter: '',
-    tagline: 'لحفظة القرآن الكريم، بنيّة صدقة جارية.',
+    tagline: 'لحفظة القرآن الكريم ولمن يستمع إليهم — بنيّة صدقة جارية.',
     linksLabel: 'روابط',
     about: 'تعريف',
     legalAfterName: '',

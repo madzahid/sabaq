@@ -23,6 +23,19 @@ SAJDAH_EXCLUDE = {"22:77"}
 # and al-Thalatha on printed page 16, both confirmed against the scan.
 QUARTERS = {3: ("rub", "الرَّبْع"), 5: ("nisf", "النِّصْف"), 7: ("thalatha", "الثَّلٰثَة")}
 
+# Para quarters are NOT emitted.
+#
+# The words are real and this edition prints them, but QUL's rub file cannot
+# say WHERE. Measured against the scan on six pages, the line we derive (the
+# line the rub's first verse begins on) was wrong on five, by +3, +8, 0, +13,
+# -4 and +2 lines — no constant offset, so no correction is possible from this
+# data. The page was wrong too on roughly a quarter of a 12-page sample.
+#
+# A mark in the wrong place on a Mushaf is worse than no mark, so they stay off
+# until each of the 90 is read off the printed copy. Ruku, sajdah and manzil
+# are unaffected: ruku line and numbers matched the scan on all six pages.
+
+
 
 def main():
     db = sqlite3.connect(DB)
@@ -60,15 +73,22 @@ def main():
             continue
         j = page_juz[p]
         per_juz[j] = per_juz.get(j, 0) + 1
-        # Above the ع: how many ayahs the ruku holds. Below: its number within
-        # the para. Verified on printed page 549 (5/38 for Al-Falaq, 6/39 for
-        # An-Nas) — the only page where the scan was legible enough to read.
-        rows.append((p, l, "ruku", None, v["verses_count"], per_juz[j]))
+        # Above the ع: the ruku's number within its SURAH. Below: its number
+        # within the para. Verified on printed page 354, which shows ٥ / ٨ for
+        # a ruku whose surah_ruku is 5 and juz_ruku is 8 (its verses_count is
+        # also 8, which is what made an earlier ayah-count reading look right).
+        rows.append((p, l, "ruku", None, v["surah_ruku_number"], per_juz[j]))
 
     # ---- sajdah ----------------------------------------------------------
     sj = sqlite3.connect(os.path.join(MD, "quran-metadata-sajda.sqlite"))
     kept = 0
-    for _, vk, _ in sj.execute("SELECT sajdah_number, verse_key, sajdah_type FROM sajdah"):
+    # The printed copy numbers its sajdahs — printed page 536 reads السجدة ١٣.
+    # Renumbered 1..14 after dropping 22:77, so the numbers stay contiguous and
+    # match what a reader counts in this edition.
+    for _, vk, _ in sj.execute(
+            "SELECT sajdah_number, verse_key, sajdah_type FROM sajdah ORDER BY "
+            "CAST(substr(verse_key,1,instr(verse_key,':')-1) AS INTEGER), "
+            "CAST(substr(verse_key,instr(verse_key,':')+1) AS INTEGER)"):
         if vk in SAJDAH_EXCLUDE:
             continue
         p, l = locate(word(vk, last=True))
@@ -79,20 +99,43 @@ def main():
         # ranges we do not have, so the word goes in the margin instead —
         # unmistakable, and it avoids U+06E9 (۩), whose font coverage is poor
         # enough that it renders as a stray arrow on many devices.
-        rows.append((p, l, "sajdah", "السَّجْدَة", None, None))
         kept += 1
+        rows.append((p, l, "sajdah", "السَّجْدَة", None, kept))
 
     # ---- para quarters ---------------------------------------------------
-    rb = sqlite3.connect(os.path.join(MD, "quran-metadata-rub.sqlite"))
-    for n, vk in rb.execute("SELECT rub_number, first_verse_key FROM rub ORDER BY rub_number"):
-        pos = ((n - 1) % 8) + 1
-        if pos not in QUARTERS:
-            continue
-        kind, label = QUARTERS[pos]
-        p, l = locate(word(vk))
-        if p is None:
-            continue
-        rows.append((p, l, kind, label, None, None))
+    # ---- para quarters ------------------------------------------------
+    #
+    # QUL embeds the division marks in the ayah marker itself as private-use
+    # glyphs: U+F64C = الربع, U+F64D = النصف, U+F64E = الثلاثة. That is the
+    # authoritative position, and it needs no derivation from the rub file.
+    #
+    # Cross-checked against 50 marks measured independently off the printed
+    # scan by template-matching the three words in the margins: 48 agreed.
+    # The 2 the glyphs lack (printed 124 thalatha, printed 534 rub) are taken
+    # from that scan measurement, giving a complete 90.
+    #
+    # This edition prints these in the MARGIN, not inline — src/db/quran.ts
+    # strips the glyph from the rendered marker so it does not appear twice.
+    GLYPH_KIND = {"\uf64c": "rub", "\uf64d": "nisf", "\uf64e": "thalatha"}
+    LABEL = {"rub": "الرَّبْع", "nisf": "النِّصْف", "thalatha": "الثَّلٰثَة"}
+
+    seen = set()
+    for wid, text in db.execute("SELECT id, text FROM words WHERE is_marker = 1"):
+        for ch, kind in GLYPH_KIND.items():
+            if ch in text:
+                p_, l_ = locate(wid)
+                if p_ is None:
+                    continue
+                rows.append((p_, l_, kind, LABEL[kind], None, None))
+                seen.add((p_, kind))
+
+    # Fill only where a para has no glyph for that kind, using the scan
+    # measurement. Guarded by para, not by page: adding blindly produced 31
+    # rubs because the glyph for that para sat on a neighbouring page.
+    have = {(page_juz[p_], k) for p_, k in seen}
+    for page_, line_, kind in ((123, 9, "thalatha"), (533, 8, "rub")):
+        if (page_juz[page_], kind) not in have:
+            rows.append((page_, line_, kind, LABEL[kind], None, None))
 
     # ---- manzil: a property of the page, printed at its foot -------------
     mz = sqlite3.connect(os.path.join(MD, "quran-metadata-manzil.sqlite"))

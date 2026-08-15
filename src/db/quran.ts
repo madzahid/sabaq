@@ -53,13 +53,29 @@ function rowsOf(sql: string, params: unknown[] = []): Record<string, unknown>[] 
   return out
 }
 
+/**
+ * QUL embeds the para-division marks inside the ayah-number marker as
+ * private-use glyphs: U+F64C الربع, U+F64D النصف, U+F64E الثلاثة.
+ *
+ * This edition prints those in the MARGIN, not in the line — the printed page
+ * shows a plain ayah circle. Left in, the font draws them as a small circled
+ * fraction beside the number, which is not on the page being reproduced.
+ *
+ * Stripped at read time rather than in the database, so the source text stays
+ * exactly as QUL published it and the markers table keeps using these glyphs
+ * as its authority for where each quarter falls. See pipeline/lib/build_markers.py.
+ */
+const DIVISION_GLYPHS = /[\uF64C\uF64D\uF64E]/g
+
 function toWord(r: Record<string, unknown>): Word {
   return {
     id: r.id as number,
     surah: r.surah as number,
     ayah: r.ayah as number,
     position: r.position as number,
-    text: r.text as string,
+    text: (r.is_marker as number) === 1
+      ? (r.text as string).replace(DIVISION_GLYPHS, '')
+      : (r.text as string),
     isMarker: (r.is_marker as number) === 1,
     marks: r.marks ? JSON.parse(r.marks as string) : null,
   }

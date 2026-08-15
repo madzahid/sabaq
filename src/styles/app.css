@@ -135,7 +135,16 @@ html[lang="ur"] .foot-sub {
 .hdr {
   display: flex; align-items: center; gap: 12px;
   direction: ltr; font-size: 15px; padding: 2px 0 7px;
+  /* NOT the Quranic face. IndopakNastaleeq covers Arabic but not the Urdu
+     letters پ چ گ ک ہ ے, so 'پارہ' rendered as 'ارہ' — the پ was missing,
+     not clipped. The surah name here is Arabic and renders fine either way. */
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
 }
+/* The juz and surah labels are flex items, and flex items shrink by default:
+   'پارہ ۲۰' was losing its first letter at the sheet edge. Only the rules
+   between them may give way. */
+.hdr > span { flex-shrink: 0; white-space: nowrap; }
+.hdr .dash { flex-shrink: 1; }
 .hdr .dash { flex: 1; height: 1px; background: var(--frame); opacity: .55; }
 .hdr .pageno { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; opacity: .7; }
 
@@ -155,7 +164,7 @@ html[lang="ur"] .foot-sub {
 .gutter-marks { right: 0; }
 
 .mk {
-  position: absolute; height: var(--line-h);
+  position: absolute; transform: translateY(-50%);
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', serif;
@@ -164,8 +173,23 @@ html[lang="ur"] .foot-sub {
 .gutter-ruku  .mk { right: 100%; padding-right: 9px; }
 .gutter-marks .mk { left: 100%; padding-left: 9px; }
 
-.mk-ain { font-size: 18px; color: var(--ink); }
-.mk-n   { font-size: 11px; color: var(--ink); opacity: .8; font-family: ui-sans-serif, system-ui, sans-serif; }
+/* Proportions measured off the printed scan, as fractions of a line:
+   the surah-ruku number sits TIGHT against the ع (no gap), the two together
+   occupy 74% of a line; then a 4% gap; then the para-ruku number at 15%.
+   Total 93% of a line. A uniform gap between all three was wrong twice over —
+   air above the ع where the print has none, and too little below it. */
+.mk-ruku { gap: 0; }
+.mk-ain {
+  font-size: calc(var(--line-h) * 0.42);
+  color: var(--ink); line-height: 1;
+}
+.mk-ruku .mk-n:last-child { margin-top: calc(var(--line-h) * 0.04); }
+/* Same Arabic face as the ع and full ink. In a Latin sans at 80% opacity the
+   Arabic-Indic digits all but vanished beside the ain. */
+.mk-n {
+  font-size: calc(var(--line-h) * 0.20); line-height: 1; color: var(--ink);
+  font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', serif;
+}
 /* Set like the quarter words, but heavier: a sajdah is an act of worship,
    not a navigation aid, and must be impossible to miss. */
 .mk-sajdah {
@@ -243,8 +267,6 @@ html[lang="ur"] .foot-sub {
 
 @media (max-width: 620px) {
   .sheet { padding: 10px 30px 12px; margin: 10px 8px; }
-  .mk-n { font-size: 8.5px; }
-  .mk-ain { font-size: 13px; }
   .mk-quarter { font-size: 10.5px; }
   :root { --line-h: 46px; --ar-size: 21px; }
   .site-head { gap: 10px; padding: 9px 12px; flex-wrap: wrap; }

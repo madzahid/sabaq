@@ -1,5 +1,6 @@
 import type { Marker, MistakeKind, Page } from '../types'
 import { printedPage } from '../db/quran'
+import { pageDigits } from '../i18n/digits'
 import { SURAH_NAMES } from '../i18n/surahs'
 import { useLocale } from '../i18n/useLocale'
 import Word from './Word'
@@ -19,20 +20,28 @@ interface Props {
  * memory a student is holding; nothing in the margin may disturb them.
  */
 function MarginMark({ m }: { m: Marker }) {
-  const top = { top: `calc(${m.lineNo - 1} * var(--line-h))` }
+  // Anchored to the CENTRE of its line, not the top. A vertical word is as
+  // tall as the word, so anchoring by the top let it flow downward and sit
+  // about two lines below where the print puts it. Paired with
+  // translateY(-50%) in .mk, this centres every mark whatever its height.
+  const top = { top: `calc(${m.lineNo - 0.5} * var(--line-h))` }
 
   if (m.kind === 'ruku') {
     return (
       <span className="mk mk-ruku" style={top} aria-hidden="true">
-        <b className="mk-n">{m.nAbove}</b>
+        <b className="mk-n">{pageDigits(m.nAbove ?? '')}</b>
         <b className="mk-ain">ع</b>
-        <b className="mk-n">{m.nBelow}</b>
+        <b className="mk-n">{pageDigits(m.nBelow ?? '')}</b>
       </span>
     )
   }
 
   if (m.kind === 'sajdah') {
-    return <span className="mk mk-sajdah" style={top} aria-hidden="true">{m.label}</span>
+    return (
+      <span className="mk mk-sajdah" style={top} aria-hidden="true">
+        {m.label} {pageDigits(m.nBelow ?? '')}
+      </span>
+    )
   }
 
   // rub / nisf / thalatha — printed as a word, set vertically in the margin.
@@ -53,13 +62,13 @@ export default function MushafPage({ page, marked, peeked, onTapWord }: Props) {
   return (
     <div className="sheet" dir="rtl" lang="ar">
       <header className="hdr">
-        <span>{t.juz} {page.juz}</span>
+        <span>{t.juz} {pageDigits(page.juz)}</span>
         <span className="dash" />
-        <span className="pageno">{printedPage(page.page)}</span>
+        <span className="pageno">{pageDigits(printedPage(page.page))} — {printedPage(page.page)}</span>
         <span className="dash" />
         {/* Surah name stays Arabic in all three languages — it has to match the
             header printed in the Mushaf the student is holding. */}
-        <span>{SURAH_NAMES[page.surah]} {page.surah}</span>
+        <span>{SURAH_NAMES[page.surah]} {pageDigits(page.surah)}</span>
       </header>
 
       <div className="frame">
@@ -109,7 +118,7 @@ export default function MushafPage({ page, marked, peeked, onTapWord }: Props) {
       </div>
 
       {page.manzil != null && (
-        <div className="manzil" aria-hidden="true">منزل {page.manzil}</div>
+        <div className="manzil" aria-hidden="true">منزل {pageDigits(page.manzil)}</div>
       )}
     </div>
   )

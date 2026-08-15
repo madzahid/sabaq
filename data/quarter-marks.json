@@ -1,0 +1,355 @@
+{
+ "_source": "Measured from 16-line-quran-tajwid-colored.pdf by template-matching the words الربع / النصف / الثلاثة in the page margins. Page and line are read off the print, NOT derived from QUL rub data, which does not encode them. Only marks matched at >=0.80 confidence are listed: 50 of the 90 a complete set would have. The other 40 were not found in the side margins and remain unverified — a missing mark is acceptable, a wrong one is not.",
+ "marks": [
+  {
+   "page": 7,
+   "line": 5,
+   "kind": "rub",
+   "printed": 8,
+   "score": 1.0
+  },
+  {
+   "page": 11,
+   "line": 5,
+   "kind": "nisf",
+   "printed": 12,
+   "score": 1.0
+  },
+  {
+   "page": 15,
+   "line": 14,
+   "kind": "thalatha",
+   "printed": 16,
+   "score": 0.976
+  },
+  {
+   "page": 24,
+   "line": 9,
+   "kind": "rub",
+   "printed": 25,
+   "score": 0.98
+  },
+  {
+   "page": 29,
+   "line": 1,
+   "kind": "nisf",
+   "printed": 30,
+   "score": 0.967
+  },
+  {
+   "page": 34,
+   "line": 2,
+   "kind": "thalatha",
+   "printed": 35,
+   "score": 0.947
+  },
+  {
+   "page": 42,
+   "line": 5,
+   "kind": "rub",
+   "printed": 43,
+   "score": 0.959
+  },
+  {
+   "page": 47,
+   "line": 5,
+   "kind": "nisf",
+   "printed": 48,
+   "score": 0.897
+  },
+  {
+   "page": 65,
+   "line": 1,
+   "kind": "nisf",
+   "printed": 66,
+   "score": 0.963
+  },
+  {
+   "page": 69,
+   "line": 7,
+   "kind": "thalatha",
+   "printed": 70,
+   "score": 0.953
+  },
+  {
+   "page": 83,
+   "line": 3,
+   "kind": "nisf",
+   "printed": 84,
+   "score": 0.964
+  },
+  {
+   "page": 87,
+   "line": 10,
+   "kind": "thalatha",
+   "printed": 88,
+   "score": 0.966
+  },
+  {
+   "page": 101,
+   "line": 9,
+   "kind": "nisf",
+   "printed": 102,
+   "score": 0.978
+  },
+  {
+   "page": 105,
+   "line": 16,
+   "kind": "thalatha",
+   "printed": 106,
+   "score": 0.963
+  },
+  {
+   "page": 123,
+   "line": 9,
+   "kind": "thalatha",
+   "printed": 124,
+   "score": 0.96
+  },
+  {
+   "page": 154,
+   "line": 13,
+   "kind": "nisf",
+   "printed": 155,
+   "score": 0.963
+  },
+  {
+   "page": 168,
+   "line": 11,
+   "kind": "rub",
+   "printed": 169,
+   "score": 0.96
+  },
+  {
+   "page": 173,
+   "line": 6,
+   "kind": "nisf",
+   "printed": 174,
+   "score": 0.961
+  },
+  {
+   "page": 177,
+   "line": 8,
+   "kind": "thalatha",
+   "printed": 178,
+   "score": 0.916
+  },
+  {
+   "page": 195,
+   "line": 5,
+   "kind": "thalatha",
+   "printed": 196,
+   "score": 0.962
+  },
+  {
+   "page": 208,
+   "line": 5,
+   "kind": "nisf",
+   "printed": 209,
+   "score": 0.964
+  },
+  {
+   "page": 213,
+   "line": 10,
+   "kind": "thalatha",
+   "printed": 214,
+   "score": 0.914
+  },
+  {
+   "page": 226,
+   "line": 16,
+   "kind": "nisf",
+   "printed": 227,
+   "score": 0.921
+  },
+  {
+   "page": 231,
+   "line": 6,
+   "kind": "thalatha",
+   "printed": 232,
+   "score": 0.952
+  },
+  {
+   "page": 249,
+   "line": 10,
+   "kind": "thalatha",
+   "printed": 250,
+   "score": 0.933
+  },
+  {
+   "page": 263,
+   "line": 7,
+   "kind": "nisf",
+   "printed": 264,
+   "score": 0.952
+  },
+  {
+   "page": 267,
+   "line": 14,
+   "kind": "thalatha",
+   "printed": 268,
+   "score": 0.942
+  },
+  {
+   "page": 285,
+   "line": 5,
+   "kind": "thalatha",
+   "printed": 286,
+   "score": 0.966
+  },
+  {
+   "page": 294,
+   "line": 6,
+   "kind": "rub",
+   "printed": 295,
+   "score": 0.969
+  },
+  {
+   "page": 298,
+   "line": 16,
+   "kind": "nisf",
+   "printed": 299,
+   "score": 0.941
+  },
+  {
+   "page": 317,
+   "line": 6,
+   "kind": "nisf",
+   "printed": 318,
+   "score": 0.936
+  },
+  {
+   "page": 321,
+   "line": 10,
+   "kind": "thalatha",
+   "printed": 322,
+   "score": 0.951
+  },
+  {
+   "page": 330,
+   "line": 3,
+   "kind": "rub",
+   "printed": 331,
+   "score": 0.988
+  },
+  {
+   "page": 335,
+   "line": 4,
+   "kind": "nisf",
+   "printed": 336,
+   "score": 0.946
+  },
+  {
+   "page": 339,
+   "line": 13,
+   "kind": "thalatha",
+   "printed": 340,
+   "score": 0.94
+  },
+  {
+   "page": 348,
+   "line": 7,
+   "kind": "rub",
+   "printed": 349,
+   "score": 0.975
+  },
+  {
+   "page": 353,
+   "line": 3,
+   "kind": "nisf",
+   "printed": 354,
+   "score": 0.917
+  },
+  {
+   "page": 366,
+   "line": 16,
+   "kind": "rub",
+   "printed": 367,
+   "score": 0.965
+  },
+  {
+   "page": 371,
+   "line": 10,
+   "kind": "nisf",
+   "printed": 372,
+   "score": 0.931
+  },
+  {
+   "page": 388,
+   "line": 16,
+   "kind": "nisf",
+   "printed": 389,
+   "score": 0.963
+  },
+  {
+   "page": 411,
+   "line": 6,
+   "kind": "thalatha",
+   "printed": 412,
+   "score": 0.942
+  },
+  {
+   "page": 420,
+   "line": 12,
+   "kind": "rub",
+   "printed": 421,
+   "score": 0.98
+  },
+  {
+   "page": 429,
+   "line": 10,
+   "kind": "thalatha",
+   "printed": 430,
+   "score": 0.932
+  },
+  {
+   "page": 447,
+   "line": 7,
+   "kind": "thalatha",
+   "printed": 448,
+   "score": 0.967
+  },
+  {
+   "page": 456,
+   "line": 6,
+   "kind": "rub",
+   "printed": 457,
+   "score": 0.964
+  },
+  {
+   "page": 493,
+   "line": 7,
+   "kind": "rub",
+   "printed": 494,
+   "score": 0.963
+  },
+  {
+   "page": 518,
+   "line": 4,
+   "kind": "nisf",
+   "printed": 519,
+   "score": 0.948
+  },
+  {
+   "page": 523,
+   "line": 7,
+   "kind": "thalatha",
+   "printed": 524,
+   "score": 0.958
+  },
+  {
+   "page": 533,
+   "line": 8,
+   "kind": "rub",
+   "printed": 534,
+   "score": 0.942
+  },
+  {
+   "page": 538,
+   "line": 6,
+   "kind": "nisf",
+   "printed": 539,
+   "score": 0.856
+  }
+ ]
+}
