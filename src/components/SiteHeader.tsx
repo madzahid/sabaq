@@ -14,6 +14,7 @@ interface Props {
   onToggleHifz: () => void
   luqmaCount: number
   ataknaCount: number
+  onReview: () => void
 }
 
 /**
@@ -21,7 +22,7 @@ interface Props {
  * screen space is scarce — see isWeb() in src/lib/platform.ts.
  */
 export default function SiteHeader({
-  pageNo, surah, juz, onGo, hifzActive, onToggleHifz, luqmaCount, ataknaCount,
+  pageNo, surah, juz, onGo, hifzActive, onToggleHifz, luqmaCount, ataknaCount, onReview,
 }: Props) {
   const { locale, t, setLocale } = useLocale()
 
@@ -124,8 +125,18 @@ export default function SiteHeader({
           ))}
         </div>
 
-        {luqmaCount > 0 && <span className="count luqma">{t.luqma(luqmaCount)}</span>}
-        {ataknaCount > 0 && <span className="count atakna">{t.atakna(ataknaCount)}</span>}
+        {/* The counts are the way into the review panel: after a whole para
+            they are the only thing on screen that knows a mark exists. */}
+        {luqmaCount > 0 && (
+          <button className="count luqma" onClick={onReview} aria-label={t.review.title}>
+            {t.luqma(luqmaCount)}
+          </button>
+        )}
+        {ataknaCount > 0 && (
+          <button className="count atakna" onClick={onReview} aria-label={t.review.title}>
+            {t.atakna(ataknaCount)}
+          </button>
+        )}
         <button
           className={hifzActive ? 'primary on' : 'primary'}
           onClick={onToggleHifz}

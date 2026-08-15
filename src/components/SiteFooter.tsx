@@ -44,6 +44,8 @@ export default function SiteFooter() {
           silently re-renders the Mushaf. BASE_URL keeps it correct if the app
           is ever deployed under a sub-path. */}
       <nav className="foot-links" aria-label={t.footer.linksLabel}>
+        <a href={`${import.meta.env.BASE_URL}guide.html`}>{t.footer.guide}</a>
+        <span aria-hidden="true">·</span>
         <a href={`${import.meta.env.BASE_URL}about.html`}>{t.footer.about}</a>
       </nav>
 

@@ -1,5 +1,6 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { Mistake, MistakeKind } from '../types'
+import { read, write } from '../lib/store'
 
 /**
  * سماعت موڈ — the listener taps the word where the student stumbled.
@@ -11,16 +12,43 @@ import type { Mistake, MistakeKind } from '../types'
  *
  *     unmarked  ->  لقمہ luqma  ->  اٹکنا atakna  ->  unmarked
  *
+ * Marks survive a reload. A para takes half an hour and a phone can sleep or
+ * a tab can be closed in the middle of it; losing the session at that point
+ * would be worse than not recording it at all.
+ *
  * luqma comes first because it is the common case and the number madrasas
  * actually grade by, so the listener who only marks luqmas taps exactly once
  * per mistake, as before. The difference between the two is who resolved it:
  * a luqma is the student being prompted, an atakna is the student faltering
  * and recovering alone. Five of each describe very different students.
  */
+const KEY = 'sabaq.mistakes'
+
+function load(): Mistake[] {
+  const raw = read(KEY)
+  if (!raw) return []
+  try {
+    const v = JSON.parse(raw)
+    // Validated, not trusted: this is user-editable storage, and a bad entry
+    // would put a mark on a word that does not exist.
+    if (!Array.isArray(v)) return []
+    return v.filter(
+      (m) => m && Number.isInteger(m.wordId) &&
+             (m.kind === 'luqma' || m.kind === 'atakna'),
+    )
+  } catch {
+    return []
+  }
+}
+
 export function useListening() {
   const [recording, setRecording] = useState(false)
-  const [mistakes, setMistakes] = useState<Mistake[]>([])
+  const [mistakes, setMistakes] = useState<Mistake[]>(load)
   const startedAt = useRef<number>(0)
+
+  useEffect(() => {
+    write(KEY, JSON.stringify(mistakes))
+  }, [mistakes])
 
   const start = useCallback(() => {
     startedAt.current = Date.now()
@@ -30,6 +58,9 @@ export function useListening() {
   }, [])
 
   const stop = useCallback(() => setRecording(false), [])
+
+  /** Clear the sitting. The only way to reset, so it must be deliberate. */
+  const clear = useCallback(() => setMistakes([]), [])
 
   const mark = useCallback((wordId: number) => {
     setMistakes((prev) => {
@@ -52,7 +83,8 @@ export function useListening() {
     })
   }, [])
 
-  /** Luqmas per page is the number teachers actually care about. */
+  /** Totals for the whole sitting, not the current page — the header chips
+   *  say so, and the review panel breaks them down by page. */
   const luqmaCount = mistakes.filter((m) => m.kind === 'luqma').length
   const ataknaCount = mistakes.filter((m) => m.kind === 'atakna').length
 
@@ -62,5 +94,5 @@ export function useListening() {
     [mistakes],
   )
 
-  return { recording, mistakes, kinds, luqmaCount, ataknaCount, start, stop, mark }
+  return { recording, mistakes, kinds, luqmaCount, ataknaCount, start, stop, mark, clear }
 }

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12594a">
+<title>رہنمائی — سبق</title>
+<style>
+ body{margin:0;background:#efece5;color:#1a1a1a;
+   font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;line-height:1.8}
+ html[lang="ur"] body{font-family:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq",serif;line-height:2.4}
+ .wrap{max-width:660px;margin:0 auto;padding:44px 22px 70px}
+ h1{font-size:40px;margin:0 0 6px;line-height:1.6}
+ h1 .home{color:inherit;text-decoration:none}
+ h1 .home:hover{color:#12594a}
+ h2{font-size:24px;margin:34px 0 4px;line-height:1.7}
+ .kicker{font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;letter-spacing:.2em;
+   text-transform:uppercase;color:#9a7b32;margin:0}
+ .card{background:#fff;border-radius:10px;padding:18px 22px;margin-top:34px;
+   box-shadow:0 3px 18px rgba(0,0,0,.07)}
+ a{color:#12594a}
+ .brandline{margin:20px 0 0;text-align:center;font-size:11.5px;letter-spacing:.04em;
+   font-family:ui-sans-serif,system-ui,sans-serif;direction:ltr;opacity:.8}
+ .back{margin:20px 0 0;text-align:center}
+ .back a{font-size:17px;color:#12594a;text-decoration:none;
+   border-bottom:1px solid #c9c4ba;padding-bottom:2px}
+ .back a:hover{border-bottom-color:#12594a}
+ /* Language switcher — mirrors the one in the app's header. */
+ .langsel{display:flex;gap:2px;padding:2px;direction:ltr;margin:0 0 30px;
+   border:1px solid #d8d3c8;background:#e7e3da;border-radius:8px;width:max-content}
+ .langsel button{border:0;background:transparent;color:#5f6b66;cursor:pointer;
+   font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;font-weight:600;
+   padding:5px 11px;border-radius:6px;line-height:1.4}
+ .langsel button:hover{background:rgba(0,0,0,.05)}
+ .langsel button[aria-pressed="true"]{background:#12594a;color:#fff}
+ .langsel button[data-l="ur"],.langsel button[data-l="ar"]{font-size:14px}
+ /* Only the active language is shown. No-JS readers see Urdu, the default. */
+ [data-lang]{display:none}
+</style>
+</head>
+<body><div class="wrap">
+
+  <div class="langsel" id="langsel" role="group" aria-label="Language">
+    <button data-l="ur" lang="ur">اردو</button>
+    <button data-l="en" lang="en">EN</button>
+    <button data-l="ar" lang="ar">عربي</button>
+  </div>
+
+  <p class="kicker">Sabaq</p>
+  <h1><a class="home" href="./">سبق</a></h1>
+
+  <div data-lang="ur">
+    <p>یہ ایک صفحہ ہے جس میں سب کچھ بتا دیا گیا ہے۔ ایپ جان بوجھ کر سادہ رکھی گئی ہے — سیکھنے کو زیادہ کچھ نہیں۔</p>
+
+    <h2>صفحہ بدلنا</h2>
+    <p>اوپر والی پٹی میں <b>سورت</b> اور <b>پارہ</b> کی فہرستیں ہیں، اور صفحہ نمبر کا خانہ۔ صفحہ نمبر وہی ہیں جو آپ کے چھپے ہوئے مصحف پر ہیں۔</p>
+    <p>کمپیوٹر پر <b>تیر کے بٹن</b> استعمال کریں: بائیں تیر سے اگلا صفحہ، دائیں سے پچھلا — بالکل اُسی طرح جیسے مصحف کے صفحے پلٹتے ہیں۔ فون یا ٹیبلٹ پر بائیں طرف <b>اُنگلی پھیریں</b> تو اگلا صفحہ آئے گا۔</p>
+    <p>آپ جس صفحے پر چھوڑیں گے، اگلی بار وہی کھلے گا۔</p>
+
+    <h2>حفظ موڈ</h2>
+    <p>اوپر دائیں <b>حفظ موڈ</b> دبائیں تو صفحہ دھندلا ہو جائے گا۔ اب یاد سے پڑھیں۔ کسی لفظ پر ٹَیپ کریں تو صرف وہی لفظ صاف ہو گا — تاکہ آپ خود جانچ سکیں۔ آیت کے نمبر ہمیشہ صاف رہتے ہیں، وہی صفحے کا سہارا ہیں۔</p>
+
+    <h2>سماعت موڈ — لقمہ اور اَٹْکَن</h2>
+    <p>جب بچہ سنا رہا ہو تو آپ کی نظر صفحے پر ہوتی ہے اور کان بچے پر۔ اس لیے کوئی ڈبہ، کوئی تصدیق نہیں — بس ٹَیپ:</p>
+    <p><b>ایک ٹَیپ</b> = لقمہ (بتانا پڑا) · <b>دوسرا ٹَیپ</b> = اَٹْکَن (خود سنبھل گیا) · <b>تیسرا ٹَیپ</b> = نشان ختم</p>
+    <p>لقمہ گہرے زرد رنگ میں، اَٹْکَن سرخ لکیر سے۔ اوپر دونوں کی گنتی چلتی رہتی ہے۔</p>
+
+    <h2>حاشیے کے نشان</h2>
+    <p><b>ع</b> — رکوع۔ اوپر والا عدد سورت میں رکوع کا نمبر، نیچے والا پارے میں۔</p>
+    <p><b>السَّجْدَة</b> — سجدۂ تلاوت، اپنے نمبر کے ساتھ۔ اس مصحف میں چودہ ہیں۔</p>
+    <p><b>الرَّبْع · النِّصْف · الثَّلٰثَة</b> — پارے کی چوتھائی، آدھا اور تین چوتھائی۔</p>
+    <p><b>منزل</b> — ہر صفحے کے نیچے۔</p>
+
+    <h2>زبان</h2>
+    <p>اوپر <b>اردو · EN · عربي</b> سے زبان بدلیں۔ آپ کا انتخاب یاد رکھا جاتا ہے۔ قرآن کا متن ہر زبان میں عربی ہی رہتا ہے اور صفحہ دائیں سے بائیں — چھپا ہوا صفحہ کبھی نہیں بدلتا۔</p>
+
+    <p class="back"><a href="./about.html">تعارف</a> · <a href="./">مصحف کھولیں ←</a></p>
+  </div>
+
+  <div data-lang="en">
+    <p>One page, everything on it. The app is deliberately small — there is not much to learn.</p>
+
+    <h2>Moving between pages</h2>
+    <p>The bar at the top has a <b>surah</b> list, a <b>juz</b> list, and a page-number box. The page numbers are the ones printed in your Mushaf, not internal ones.</p>
+    <p>On a computer use the <b>arrow keys</b>: left goes forward, right goes back — the direction the Mushaf actually turns. On a phone or tablet, <b>swipe left</b> for the next page.</p>
+    <p>It reopens wherever you left off.</p>
+
+    <h2>Hifz mode</h2>
+    <p>Press <b>Hifz mode</b> at the top right and the page blurs. Recite from memory, then tap any word to reveal just that word and check yourself. Ayah numbers stay sharp — they are what anchors the page.</p>
+
+    <h2>Listening mode — luqma and atakna</h2>
+    <p>While a student recites, your eyes are on the page and your ears are on them. So there is no dialog and no confirmation, only a tap:</p>
+    <p><b>One tap</b> = luqma, you had to prompt them · <b>tap again</b> = atakna, they faltered but recovered alone · <b>a third tap</b> clears it</p>
+    <p>Luqma is a filled amber block, atakna a red dashed rule. Both counts run in the header.</p>
+
+    <h2>The margin marks</h2>
+    <p><b>ع</b> — ruku. The number above is its number within the surah, the one below its number within the para.</p>
+    <p><b>السَّجْدَة</b> — a sajdah of recitation, with its number. There are fourteen in this Mushaf.</p>
+    <p><b>الرَّبْع · النِّصْف · الثَّلٰثَة</b> — the quarter, half and three-quarter points of the para.</p>
+    <p><b>منزل</b> — at the foot of every page.</p>
+
+    <h2>Language</h2>
+    <p>Switch with <b>اردو · EN · عربي</b> at the top. Your choice is remembered. The Quranic text stays Arabic and the page stays right-to-left in every language — the printed page never mirrors.</p>
+
+    <p class="back"><a href="./about.html">About</a> · <a href="./">Open the Mushaf →</a></p>
+  </div>
+
+  <div data-lang="ar">
+    <p>صفحة واحدة فيها كل شيء. التطبيق بسيط عن قصد — ليس فيه الكثير لتتعلّمه.</p>
+
+    <h2>التنقّل بين الصفحات</h2>
+    <p>في الشريط العلوي قائمة <b>السور</b> وقائمة <b>الأجزاء</b> وخانة رقم الصفحة. والأرقام هي المطبوعة في مصحفك نفسه.</p>
+    <p>على الحاسوب استخدم <b>مفاتيح الأسهم</b>: السهم الأيسر للأمام والأيمن للخلف، كما يُقلَّب المصحف. وعلى الهاتف <b>اسحب يسارًا</b> للصفحة التالية.</p>
+    <p>ويفتح من حيث توقّفت.</p>
+
+    <h2>وضع الحفظ</h2>
+    <p>اضغط <b>وضع الحفظ</b> فتُخفى الصفحة. اتلُ عن ظهر قلب، ثم انقر أي كلمة لتظهر وحدها فتتحقّق بنفسك. وتبقى أرقام الآيات ظاهرة دائمًا.</p>
+
+    <h2>وضع السماع — اللقمة والتعثّر</h2>
+    <p>عيناك على الصفحة وأذناك على الطالب، فلا نوافذ ولا تأكيد — نقرة واحدة فقط:</p>
+    <p><b>نقرة</b> = لقمة (احتاج إلى التلقين) · <b>نقرة ثانية</b> = تعثّر (تدارك وحده) · <b>نقرة ثالثة</b> تمسح العلامة</p>
+    <p>اللقمة بلون كهرماني ممتلئ، والتعثّر بخط أحمر متقطّع. والعدّان يظهران في الأعلى.</p>
+
+    <h2>علامات الهامش</h2>
+    <p><b>ع</b> — الركوع. الرقم الأعلى ترتيبه في السورة، والأسفل ترتيبه في الجزء.</p>
+    <p><b>السَّجْدَة</b> — سجدة التلاوة برقمها، وهي أربع عشرة في هذا المصحف.</p>
+    <p><b>الرَّبْع · النِّصْف · الثَّلٰثَة</b> — أرباع الجزء.</p>
+    <p><b>منزل</b> — أسفل كل صفحة.</p>
+
+    <h2>اللغة</h2>
+    <p>بدّل من <b>اردو · EN · عربي</b> في الأعلى، ويُحفظ اختيارك. ويبقى النص القرآني عربيًّا والصفحة من اليمين إلى اليسار في كل اللغات.</p>
+
+    <p class="back"><a href="./about.html">تعريف</a> · <a href="./">افتح المصحف ←</a></p>
+  </div>
+
+</div>
+<script>
+/* This page is a plain file in public/ — no build step, no imports, and it must
+   work offline. It reads the language the app already saved under the same key
+   as src/i18n/locale.ts. Detection is NOT reimplemented here: the app persists
+   its detected locale on first run, so by the time anyone reaches this page a
+   value normally exists. The fallback below only covers someone who opens
+   /about.html before ever opening the app. */
+(function () {
+  var KEY = 'sabaq.locale'
+  var LOCALES = ['ur', 'en', 'ar']
+  var DIR = { ur: 'rtl', en: 'ltr', ar: 'rtl' }
+  var TITLE = { ur: 'رہنمائی — سبق', en: 'How to use — Sabaq', ar: 'دليل الاستخدام — سبق' }
+
+  function saved() {
+    try {
+      var v = localStorage.getItem(KEY)
+      return LOCALES.indexOf(v) >= 0 ? v : null
+    } catch (e) { return null }
+  }
+
+  function guess() {
+    var tags = (navigator.languages && navigator.languages.length)
+      ? navigator.languages : [navigator.language || '']
+    for (var i = 0; i < tags.length; i++) {
+      var base = String(tags[i]).toLowerCase().split(/[-_]/)[0]
+      if (base === 'ar') return 'ar'
+      if (['ur', 'pa', 'sd', 'ps', 'ks', 'hi'].indexOf(base) >= 0) return 'ur'
+    }
+    return 'en'
+  }
+
+  function apply(loc) {
+    document.documentElement.lang = loc
+    document.documentElement.dir = DIR[loc]
+    document.title = TITLE[loc]
+    var blocks = document.querySelectorAll('[data-lang]')
+    for (var i = 0; i < blocks.length; i++) {
+      blocks[i].style.display = blocks[i].getAttribute('data-lang') === loc ? 'block' : 'none'
+    }
+    var btns = document.querySelectorAll('#langsel button')
+    for (var j = 0; j < btns.length; j++) {
+      btns[j].setAttribute('aria-pressed', String(btns[j].getAttribute('data-l') === loc))
+    }
+  }
+
+  var current = saved() || guess()
+  apply(current)
+
+  document.getElementById('langsel').addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('button[data-l]') : null
+    if (!b) return
+    var loc = b.getAttribute('data-l')
+    apply(loc)
+    // Written under the app's key, so the choice carries back into the reader.
+    try { localStorage.setItem(KEY, loc) } catch (err) {}
+  })
+})()
+</script>
+</body></html>

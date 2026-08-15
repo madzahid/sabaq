@@ -156,6 +156,16 @@ export function getPage(page: number): Page | null {
  * sql.js. Instead each side is read once and matched with a binary search.
  * ------------------------------------------------------------------ */
 
+export interface WordContext {
+  wordId: number
+  /** Internal page. Use printedPage() before showing it to a reader. */
+  page: number
+  lineNo: number
+  surah: number
+  ayah: number
+  text: string
+}
+
 export interface JumpEntry {
   /** Surah or juz number. */
   n: number
@@ -213,6 +223,63 @@ export function juzIndex(): JumpEntry[] {
   juzCache = rowsOf('SELECT juz, MIN(page) AS page FROM pages GROUP BY juz ORDER BY juz')
     .map((r) => ({ n: r.juz as number, page: r.page as number }))
   return juzCache
+}
+
+/** Cached line spans, sorted by first word id, for locating a word's page. */
+let spanCache: { page: number; line: number; a: number; b: number }[] | null = null
+
+function lineSpans() {
+  if (spanCache) return spanCache
+  spanCache = rowsOf(
+    `SELECT page, line_no, first_word_id AS a, last_word_id AS b FROM lines
+      WHERE type = 'ayah' AND first_word_id IS NOT NULL ORDER BY first_word_id`,
+  ).map((r) => ({ page: r.page as number, line: r.line_no as number, a: r.a as number, b: r.b as number }))
+  return spanCache
+}
+
+function pageOfWord(wid: number): { page: number; line: number } | null {
+  const spans = lineSpans()
+  let lo = 0
+  let hi = spans.length - 1
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1
+    const s = spans[mid]
+    if (wid < s.a) hi = mid - 1
+    else if (wid > s.b) lo = mid + 1
+    else return { page: s.page, line: s.line }
+  }
+  return null
+}
+
+/**
+ * Where each of these words sits, for the review panel.
+ *
+ * A recorded mistake is only a word id — enough to draw the mark on the page,
+ * but not enough to answer "where was it?" after a whole para. This resolves
+ * ids back to a page and an ayah so a listener can find them again.
+ */
+export function wordContext(ids: number[]): WordContext[] {
+  if (!ids.length) return []
+  const rows = rowsOf(
+    `SELECT id, surah, ayah, text FROM words WHERE id IN (${ids.map(() => '?').join(',')})`,
+    ids,
+  )
+  const out: WordContext[] = []
+  for (const r of rows) {
+    const wid = r.id as number
+    const at = pageOfWord(wid)
+    // A word we cannot place is dropped rather than shown at a wrong page.
+    if (!at) continue
+    out.push({
+      wordId: wid,
+      page: at.page,
+      lineNo: at.line,
+      surah: r.surah as number,
+      ayah: r.ayah as number,
+      text: r.text as string,
+    })
+  }
+  return out.sort((x, y) => x.page - y.page || x.wordId - y.wordId)
 }
 
 export const PAGE_COUNT = 548

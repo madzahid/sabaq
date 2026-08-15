@@ -9,6 +9,7 @@ import { isWeb } from './lib/platform'
 import MushafPage from './components/MushafPage'
 import SiteHeader from './components/SiteHeader'
 import SiteFooter from './components/SiteFooter'
+import ReviewPanel from './components/ReviewPanel'
 import type { Page } from './types'
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
   // Page 1 for a new reader, otherwise wherever they left off.
   const [pageNo, setPageNo] = useState(loadLastPage)
   const [error, setError] = useState<string | null>(null)
+  const [reviewing, setReviewing] = useState(false)
 
   // Captured once so the open-on-mount effect does not re-run as the reader
   // turns pages. The database is opened exactly once per session.
@@ -64,6 +66,7 @@ export default function App() {
         onToggleHifz={hifz.toggle}
         luqmaCount={listening.luqmaCount}
         ataknaCount={listening.ataknaCount}
+        onReview={() => setReviewing(true)}
       />
 
       <main>
@@ -74,6 +77,15 @@ export default function App() {
           onTapWord={onTapWord}
         />
       </main>
+
+      {reviewing && (
+        <ReviewPanel
+          mistakes={listening.mistakes}
+          onGo={go}
+          onClose={() => setReviewing(false)}
+          onClear={listening.clear}
+        />
+      )}
 
       {web && <SiteFooter />}
     </div>

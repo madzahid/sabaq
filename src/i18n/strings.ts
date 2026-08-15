@@ -38,6 +38,13 @@ export interface Strings {
 
   language: string
 
+  review: {
+    title: string
+    empty: string
+    close: string
+    clear: string
+  }
+
   loading: string
   loadFailed: (reason: string) => string
 
@@ -48,6 +55,8 @@ export interface Strings {
     tagline: string
     linksLabel: string
     about: string
+    /** Link to the usage guide page. */
+    guide: string
     /** Follows "© {year} {name}" in the legal line. */
     legalAfterName: string
   }
@@ -69,6 +78,12 @@ const ur: Strings = {
   luqma: (n) => `${uiDigits(n, 'ur')} ${n === 1 ? 'لقمہ' : 'لقمے'}`,
   atakna: (n) => `${uiDigits(n, 'ur')} اَٹْکَن`,
   language: 'زبان',
+  review: {
+    title: 'نشان زد الفاظ',
+    empty: 'ابھی کوئی نشان نہیں۔',
+    close: 'بند کریں',
+    clear: 'سب نشان مٹا دیں',
+  },
   loading: 'لوڈ ہو رہا ہے…',
   loadFailed: (reason) => `ڈیٹا لوڈ نہیں ہوا: ${reason}`,
   footer: {
@@ -77,6 +92,7 @@ const ur: Strings = {
     tagline: 'حفاظِ کرام اور اُن کے سننے والوں کے لیے — صدقۂ جاریہ کی نیت سے۔',
     linksLabel: 'روابط',
     about: 'تعارف',
+    guide: 'رہنمائی',
     legalAfterName: '',
   },
 }
@@ -97,6 +113,12 @@ const en: Strings = {
   luqma: (n) => (n === 1 ? '1 luqma' : `${n} luqmas`),
   atakna: (n) => (n === 1 ? '1 atakna' : `${n} ataknas`),
   language: 'Language',
+  review: {
+    title: 'Marked words',
+    empty: 'Nothing marked yet.',
+    close: 'Close',
+    clear: 'Clear all marks',
+  },
   loading: 'Loading…',
   loadFailed: (reason) => `Could not load the data: ${reason}`,
   footer: {
@@ -105,6 +127,7 @@ const en: Strings = {
     tagline: 'For those memorising the Quran, and for those who listen to them — as sadaqah jariyah.',
     linksLabel: 'Links',
     about: 'About',
+    guide: 'How to use',
     legalAfterName: '',
   },
 }
@@ -125,6 +148,12 @@ const ar: Strings = {
   luqma: (n) => `اللقمات ${uiDigits(n, 'ar')}`,
   atakna: (n) => `التعثرات ${uiDigits(n, 'ar')}`,
   language: 'اللغة',
+  review: {
+    title: 'الكلمات المعلَّمة',
+    empty: 'لا توجد علامات بعد.',
+    close: 'إغلاق',
+    clear: 'مسح كل العلامات',
+  },
   loading: 'جارٍ التحميل…',
   loadFailed: (reason) => `تعذّر تحميل البيانات: ${reason}`,
   footer: {
@@ -133,6 +162,7 @@ const ar: Strings = {
     tagline: 'لحفظة القرآن الكريم ولمن يستمع إليهم — بنيّة صدقة جارية.',
     linksLabel: 'روابط',
     about: 'تعريف',
+    guide: 'دليل الاستخدام',
     legalAfterName: '',
   },
 }

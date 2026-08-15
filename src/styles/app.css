@@ -285,3 +285,58 @@ html[lang="ur"] .foot-sub {
   .site-actions .langsel button[lang="ar"] { font-size: 13px; }
   .site-foot { padding: 22px 16px 36px; }
 }
+
+/* ---- review panel ----
+   Opened from the count chips. After a full para those chips are the only
+   thing on screen that knows a mark exists, so they are the way in. */
+.sheetover {
+  position: fixed; inset: 0; z-index: 20;
+  background: rgba(20, 22, 26, .38);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 60px 16px 24px; overflow-y: auto;
+}
+.review {
+  background: var(--paper); border-radius: 12px; width: min(560px, 100%);
+  box-shadow: 0 12px 40px rgba(0,0,0,.28); padding: 16px 18px 20px;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+.review-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.review-head b { font-size: 15px; }
+.review-x {
+  margin-inline-start: auto; border: 0; background: transparent;
+  font-size: 16px; cursor: pointer; color: var(--ink); opacity: .6; padding: 4px 6px;
+}
+.review-x:hover { opacity: 1; }
+.review-empty { color: #7c8783; font-size: 14px; margin: 14px 0; }
+
+.review-page { border-top: 1px solid var(--rule); padding-top: 10px; margin-top: 10px; }
+.review-pageno {
+  border: 0; background: transparent; cursor: pointer; padding: 0 0 6px;
+  font: inherit; font-size: 13px; font-weight: 600; color: var(--accent);
+}
+.review-pageno:hover { text-decoration: underline; }
+.review ul { list-style: none; margin: 0; padding: 0; }
+.review li {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 5px 0; border-inline-start: 3px solid transparent; padding-inline-start: 9px;
+}
+.review li.r-luqma  { border-inline-start-color: var(--mark-line); }
+.review li.r-atakna { border-inline-start-color: var(--atakna-line); }
+.r-word {
+  font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', serif;
+  font-size: 19px; line-height: 1.6;
+}
+.r-ref { font-size: 12px; color: #7c8783; margin-inline-start: auto; }
+.r-kind { font-size: 11px; color: #7c8783; min-width: 54px; text-align: end; }
+
+.review-clear {
+  margin-top: 14px; width: 100%; cursor: pointer; font: inherit; font-size: 13px;
+  padding: 8px; border-radius: 8px; border: 1px solid var(--rule);
+  background: transparent; color: #8a5b5b;
+}
+.review-clear:hover { background: #fdeae8; border-color: var(--mark-line); }
+
+@media (max-width: 620px) {
+  .sheetover { padding: 40px 10px 20px; }
+  .r-ref { display: none; }
+}
