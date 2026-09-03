@@ -7,9 +7,31 @@
  * preference does not persist", never to an error.
  */
 
+/**
+ * Keys carry the app's name, and the app was renamed from Sabaq to Quran for
+ * Hifz. A reader who had already used it has their last page, their language
+ * and their marks under the old prefix — losing those on an update would be a
+ * silent data loss, and the marks in particular are somebody's evening of
+ * listening.
+ *
+ * So a read that misses the new key falls back to the old one and copies the
+ * value across. The old key is deliberately NOT deleted: an older build left
+ * open in another tab still reads it, and leaving it costs a few bytes.
+ */
+const LEGACY_PREFIX = 'sabaq.'
+const PREFIX = 'qfh.'
+
 export function read(key: string): string | null {
   try {
-    return localStorage.getItem(key)
+    const v = localStorage.getItem(key)
+    if (v !== null) return v
+
+    if (!key.startsWith(PREFIX)) return null
+    const legacy = localStorage.getItem(LEGACY_PREFIX + key.slice(PREFIX.length))
+    if (legacy === null) return null
+
+    localStorage.setItem(key, legacy)
+    return legacy
   } catch {
     return null
   }

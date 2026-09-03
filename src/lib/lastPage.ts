@@ -1,7 +1,7 @@
 import { PAGE_COUNT } from '../db/quran'
 import { read, write } from './store'
 
-const KEY = 'sabaq.lastPage'
+const KEY = 'qfh.lastPage'
 
 /** A first-time reader opens the Mushaf at the beginning. */
 export const DEFAULT_PAGE = 1

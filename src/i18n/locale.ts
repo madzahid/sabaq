@@ -14,7 +14,7 @@ export const DIR: Record<Locale, 'rtl' | 'ltr'> = { ur: 'rtl', en: 'ltr', ar: 'r
 /** What the switcher shows. Each language names itself, never translated. */
 export const ENDONYM: Record<Locale, string> = { ur: 'اردو', en: 'EN', ar: 'عربي' }
 
-const STORAGE_KEY = 'sabaq.locale'
+const STORAGE_KEY = 'qfh.locale'
 
 function isLocale(v: unknown): v is Locale {
   return v === 'ur' || v === 'en' || v === 'ar'

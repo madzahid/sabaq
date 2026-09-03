@@ -49,11 +49,13 @@ export default function SiteHeader({
 
   return (
     <header className="site-head">
-      {/* The wordmark is the app's name, not a translated string: سبق in the
-          Arabic script and Sabaq in Latin, in every language. */}
+      {/* The wordmark is the app's name, not a translated string, so it does
+          not change with the language — قرآن in the Arabic script over FOR
+          HIFZ in Latin, in all three. The accessible name IS translated: a
+          screen reader should say the name in the reader's own language. */}
       <a className="brand" href="/" aria-label={t.brand}>
-        <span className="brand-ar">سبق</span>
-        <span className="brand-en">Sabaq</span>
+        <span className="brand-ar">قرآن</span>
+        <span className="brand-en">for hifz</span>
       </a>
 
       <nav className="site-nav" aria-label={t.nav.label}>

@@ -117,9 +117,9 @@ export interface Strings {
 }
 
 const ur: Strings = {
-  brand: 'سبق',
+  brand: 'قرآن برائے حفظ',
   nav: {
-    label: 'مصحف',
+    label: 'قرآن پاک',
     prev: 'پچھلا صفحہ',
     next: 'اگلا صفحہ',
     pageNumber: 'صفحہ نمبر',
@@ -158,7 +158,7 @@ const ur: Strings = {
     tabMakharij: 'مخارج',
     waqfIntro: 'یہ نشانات بتاتے ہیں کہ کہاں ٹھہرنا ہے اور کہاں نہیں۔',
     makharijIntro: 'حروف کے مخارج — منہ میں وہ مقام جہاں سے حرف نکلتا ہے۔',
-    makharijCredit: 'یہی نقشہ اسی مصحف کے صفحہ ۵۵۲ پر چھپا ہے۔',
+    makharijCredit: 'یہی نقشہ اسی قرآن پاک کے صفحہ ۵۵۲ پر چھپا ہے۔',
     jawUpper: 'بالائی جبڑا',
     jawLower: 'بایاں نصف جبڑا',
     teeth: 'دانتوں کے نام',
@@ -177,7 +177,7 @@ const ur: Strings = {
 }
 
 const en: Strings = {
-  brand: 'Sabaq',
+  brand: 'Quran for Hifz',
   nav: {
     label: 'Mushaf',
     prev: 'Previous page',
@@ -237,7 +237,7 @@ const en: Strings = {
 }
 
 const ar: Strings = {
-  brand: 'سبق',
+  brand: 'القرآن للحفظ',
   nav: {
     label: 'المصحف',
     prev: 'الصفحة السابقة',

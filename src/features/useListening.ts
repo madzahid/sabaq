@@ -22,7 +22,7 @@ import { read, write } from '../lib/store'
  * a luqma is the student being prompted, an atakna is the student faltering
  * and recovering alone. Five of each describe very different students.
  */
-const KEY = 'sabaq.mistakes'
+const KEY = 'qfh.mistakes'
 
 function load(): Mistake[] {
   const raw = read(KEY)
