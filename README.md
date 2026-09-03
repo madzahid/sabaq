@@ -3,7 +3,10 @@
 A Quran reader built for memorisation — and for the person sitting across from
 the child, listening.
 
-<img src="docs/page-363.png" width="420" alt="Page 363">
+<p>
+  <img src="docs/reader.png" width="330" alt="Page 363 — para 21 opens, its first line banded green">
+  <img src="docs/surah-band.png" width="330" alt="Surah Ar-Rum opening, with its printed heading band">
+</p>
 
 ## What it is
 
@@ -16,7 +19,44 @@ features possible:
   One tap marks a **لقمہ** (had to be prompted), a second turns it into an
   **اٹکنا** (faltered but recovered alone), a third clears it. No dialog, no
   mode switch — the listener's eyes stay on the page. Both counts show per page.
-- Session recording, revision queue, mutashabihat pairing *(planned)*
+- **Review panel** — after a whole para, every mark listed with its page and
+  ayah, grouped by page, tap to jump back
+- Audio: reference recitation, student recording, mistake detection *(planned —
+  see `docs/AUDIO.md`)*
+
+<img src="docs/listening.png" width="560" alt="Luqma in amber, atakna underlined in red">
+
+## Faithful to the printed page
+
+Everything the print puts on a page is here, and none of it is computed:
+
+- **ع** ruku signs, with the surah ruku number above and the para ruku below
+- **السجدة** — all fourteen sajdahs, numbered
+- **الربع · النصف · الثلاثة** — the para quarters, in the margin
+- **منزل** at the foot of every page
+- the **surah heading band** — ayah count, ruku count, Makki/Madani, and the
+  surah's place in the order of revelation
+- the **green band** on the line where a para opens
+- each para's **name** in the page header (۲۱ اتل مآ اوحی)
+
+Para start pages are read off the print itself, not derived from juz metadata —
+the Indo-Pak para division and the juz division disagree in both directions.
+See the header comment in `src/data/juzStart.ts`.
+
+## Tajweed reference
+
+The three references the printed Mushaf carries in its back matter, in all
+three languages:
+
+<img src="docs/tajweed-colours.png" width="380" alt="The tajweed colour key">
+<img src="docs/tajweed-waqf.png" width="330" alt="The waqf signs">
+
+- **Colours** — ghunnah, ikhfa, qalqala, madd, and the unpronounced letters
+- **Pause marks** — the fifteen waqf signs
+- **Makharij** — the mouth diagram and the names of the teeth
+
+Each colour swatch is painted by the same CSS class the Quran text uses, so the
+key cannot drift from the page.
 
 ## Languages
 
@@ -34,6 +74,8 @@ three. The printed page is the memory; only the chrome around it changes.
 - Jump by **surah** (all 114) or **juz** (all 30), or type a page number
 - Arrow keys on desktop, swipe on touch
 - Opens at page 1 for a new reader, and at the last page read for a returning one
+- Progress through the current para under every page — which page of how many,
+  and how many are left
 
 ## Status
 
@@ -44,9 +86,16 @@ three. The printed page is the memory; only the chrome around it changes.
 | Tajweed marks | 77,835 |
 | Ayah alignment | 99.89% |
 
-Reader, hifz mode, and luqma/atakna marking all work. Session recording and
-audio sync are next — `useListening` already timestamps every mistake, but
-nothing starts or stops a session yet.
+Reader, hifz mode, luqma/atakna marking, the review panel, the margin marks and
+the tajweed reference all work. Audio is next — `useListening` already
+timestamps every mistake, but nothing starts or stops a session yet. The
+architecture for reference recitation, recording and mistake detection is
+written up in `docs/AUDIO.md`.
+
+Known gaps: the Nastaleeq font still loads from a CDN, which breaks the offline
+promise in a native build; words sit in uniform gaps where the print stretches
+letters (kashida justification); para 27's ثلاثہ is the one missing quarter
+mark, 89 of 90.
 
 ## Running it
 
