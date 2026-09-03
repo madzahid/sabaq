@@ -117,6 +117,15 @@ scripts in `pipeline/`. Text should be validated against an authoritative
 printed edition before release — see `docs/DATA.md`, which also records a real
 edition difference on page 363.
 
+## Reporting an error
+
+If you find a mistake in the Quranic text or in the layout of a page:
+
+**corrections@quranforhifz.com**
+
+The page number is enough — no GitHub account needed. An error in a Mushaf
+takes precedence over every feature request here.
+
 ## Author
 
 Built by **Zahid Abbasi** — [xuro.net](https://xuro.net)
