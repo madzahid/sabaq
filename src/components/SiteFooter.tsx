@@ -54,8 +54,8 @@ export default function SiteFooter() {
       </p>
 
       {/* Left in English in all three languages: it is a maker's mark, the same
-          way the سبق wordmark stays سبق. Move it into i18n/strings.ts if it
-          should ever read in Urdu and Arabic. */}
+          way the قرآن wordmark does not translate. Move it into
+          i18n/strings.ts if it should ever read in Urdu and Arabic. */}
       <p className="foot-brand">
         Proudly developed by{' '}
         <a href={SITE} target="_blank" rel="noopener noreferrer">Xuro.Net</a>

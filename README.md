@@ -1,4 +1,6 @@
-# Sabaq · سبق
+# Quran for Hifz · قرآن برائے حفظ
+
+[quranforhifz.com](https://quranforhifz.com)
 
 A Quran reader built for memorisation — and for the person sitting across from
 the child, listening.
