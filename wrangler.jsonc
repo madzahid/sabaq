@@ -1,0 +1,19 @@
+{
+  // Static assets only — there is no Worker script. The whole app is a
+  // client-side bundle plus a SQLite file, and nothing needs to run on the
+  // edge. Cloudflare serves ./dist directly.
+  //
+  // Cache headers live in public/_headers, which Workers honours, so they are
+  // not repeated here.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "quranforhifz",
+  "compatibility_date": "2026-09-03",
+  "assets": {
+    "directory": "./dist",
+    // Deliberately NOT "single-page-application": that would answer every
+    // unknown path with index.html and a 200, which reads as a soft 404 to a
+    // crawler. Pages are addressed by ?page=N on "/", so no path rewriting is
+    // needed, and about.html and guide.html are real files.
+    "not_found_handling": "none"
+  }
+}
