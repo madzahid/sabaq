@@ -16,11 +16,9 @@ import type { Page } from './types'
 
 export default function App() {
   const [page, setPage] = useState<Page | null>(null)
-  // Page 1 for a new reader, otherwise wherever they left off.
-  // A page in the URL wins over the remembered one: it means the reader
-  // followed a link to a specific page, and honouring the bookmark instead
-  // would silently take them somewhere else.
-  const [pageNo, setPageNo] = useState(() => readPageFromUrl() ?? loadLastPage())
+  // Page 1 for a new reader, otherwise wherever they left off. The URL is
+  // NOT read here — see the effect below.
+  const [pageNo, setPageNo] = useState(loadLastPage)
   const [error, setError] = useState<string | null>(null)
   const [reviewing, setReviewing] = useState(false)
   const [tajweedOpen, setTajweedOpen] = useState(false)
@@ -36,7 +34,25 @@ export default function App() {
 
   useEffect(() => {
     open()
-      .then(() => setPage(getPage(openAt.current)))
+      .then(() => {
+        // The URL is read HERE, not in the useState initialiser, and the
+        // difference is a real bug that shipped: ?page=363 opened page 364.
+        //
+        // A printed page number is converted to our internal index with the
+        // offset stored in the database, and the database is opened by this
+        // effect. Read a moment earlier and the offset is still 0, so every
+        // shared link landed one page late.
+        //
+        // A page in the URL wins over the remembered one: the reader followed
+        // a link to a specific page, and honouring the bookmark instead would
+        // silently take them somewhere else.
+        const start = readPageFromUrl() ?? openAt.current
+        setPageNo(start)
+        setPage(getPage(start))
+        // Normalise the address: a link with a junk or out-of-range page has
+        // been resolved to a real one, and the bar should say so.
+        writePageToUrl(start)
+      })
       .catch((e: Error) => setError(e.message))
   }, [])
 

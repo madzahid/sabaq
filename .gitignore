@@ -11,3 +11,6 @@ data/source/*.pdf
 data/source/*.PDF
 data/source/*.sqlite
 data/source/metadata/
+
+# Local working notes for Claude Code. Kept on disk, not in the repository.
+CLAUDE.md
