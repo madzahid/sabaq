@@ -147,6 +147,15 @@ html[lang="ur"] .foot-sub {
 .hdr .dash { flex-shrink: 1; }
 .hdr .dash { flex: 1; height: 1px; background: var(--frame); opacity: .55; }
 .hdr .pageno { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; opacity: .7; }
+/* The para's name, beside its number in the page header. Set in the Quranic
+   face because it is Quranic text. Dropped on a narrow screen, where the
+   header has to compete with the surah name for the same line. */
+.hdr-jname {
+  margin-inline-start: 7px;
+  font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', serif;
+  font-size: 14px; opacity: .8;
+}
+@media (max-width: 700px) { .hdr-jname { display: none; } }
 
 .frame { border: 1.5px solid var(--frame); padding: 3px; }
 .frame-in { border: .8px solid var(--frame); position: relative; }
@@ -220,7 +229,59 @@ html[lang="ur"] .foot-sub {
 }
 .ln:last-child { border-bottom: none; }
 .ln.centred { justify-content: center; gap: 16px; }
-.ln.surah { justify-content: center; background: #faf6ec; font-size: 21px; color: var(--gold); }
+.ln.surah { justify-content: space-between; background: var(--paper); padding: 0 6px; }
+
+/* The line a para opens on, banded green exactly as the print bands it.
+   Painted on the line's background so it cannot shift a single word. */
+.ln.ln-para { background: var(--band-fill); }
+
+/* ---- surah heading band ----
+   Set the way the print sets it: a count box at each edge, a pointed ribbon
+   between them. Everything is sized off --line-h so the band scales with the
+   page and always fits INSIDE one of the sixteen lines — this line belongs to
+   the layout table and may not grow, or the page's line breaks move. */
+.sb-box {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-width: calc(var(--line-h) * 1.15);
+  height: calc(var(--line-h) * 0.78);
+  padding: 0 8px;
+  border: 1px solid var(--band-edge);
+  background: var(--paper);
+  color: var(--band-ink);
+  line-height: 1.15;
+}
+.sb-lbl {
+  font-size: calc(var(--line-h) * 0.15);
+  /* The print rules the label off from the number. */
+  border-bottom: .8px solid var(--band-edge);
+  padding-bottom: 1px; margin-bottom: 1px;
+}
+.sb-val { font-size: calc(var(--line-h) * 0.24); }
+
+/* The ribbon. clip-path gives the pointed ends; it also clips any border,
+   which is why the shape carries its fill and no outline. */
+.sb-cart {
+  flex: 1 1 auto;
+  display: flex; align-items: center; justify-content: center;
+  height: calc(var(--line-h) * 0.78);
+  margin: 0 calc(var(--line-h) * -0.04);
+  padding: 0 calc(var(--line-h) * 0.42);
+  background: var(--band-fill);
+  color: var(--band-ink);
+  font-size: calc(var(--line-h) * 0.36);
+  line-height: 1;
+  white-space: nowrap; overflow: hidden;
+  clip-path: polygon(
+    0 50%,
+    calc(var(--line-h) * 0.30) 0,
+    calc(100% - var(--line-h) * 0.30) 0,
+    100% 50%,
+    calc(100% - var(--line-h) * 0.30) 100%,
+    calc(var(--line-h) * 0.30) 100%
+  );
+}
+
 
 /* ---- words ---- */
 /* A word is a control, not prose: marking an atakna means tapping it twice,
@@ -339,4 +400,142 @@ html[lang="ur"] .foot-sub {
 @media (max-width: 620px) {
   .sheetover { padding: 40px 10px 20px; }
   .r-ref { display: none; }
+}
+
+/* ---- progress through the current para ----
+   Inside .sheet, under منزل. Not printed in any Mushaf, but it belongs to the
+   page's footing rather than floating beneath the paper as app chrome. It is
+   OUTSIDE .frame, so it can never disturb a line break. Rendered in the native
+   build too, unlike the site header. */
+.para-prog {
+  margin: 9px 2px 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--rule);
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+/* Urdu and Arabic get the Nastaliq face the rest of their chrome uses. Not
+   IndopakNastaleeq — it has no پ, which 'پارہ' needs. See .hdr. */
+.para-prog[dir='rtl'] {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  line-height: 1.85;
+}
+.pp-row {
+  display: flex; align-items: baseline; gap: 12px;
+  font-size: 12.5px; color: var(--ink); opacity: .62;
+  padding-bottom: 5px;
+}
+.pp-row > span { white-space: nowrap; }
+.pp-gap { flex: 1; }
+.pp-left { font-weight: 600; opacity: .95; }
+.pp-bar {
+  height: 3px; border-radius: 2px;
+  background: var(--rule);
+  overflow: hidden;
+}
+.pp-fill {
+  height: 100%; border-radius: 2px;
+  background: var(--gold);
+  transition: width .18s ease;
+}
+
+@media (max-width: 640px) {
+  /* A long name plus both bracketed numbers is tight on a phone. Shrink the
+     ribbon's type rather than let overflow:hidden clip the surah name. */
+  .sb-cart { font-size: calc(var(--line-h) * 0.30); padding: 0 calc(var(--line-h) * 0.34); }
+  .sb-box { min-width: calc(var(--line-h) * 1.05); padding: 0 5px; }
+  .sb-lbl { font-size: calc(var(--line-h) * 0.14); }
+
+  .para-prog { margin-top: 7px; padding-top: 6px; }
+  .pp-row { font-size: 11.5px; gap: 8px; }
+}
+
+
+/* ---- tajweed colour key ----
+   Every swatch is painted by the same class the Quran text uses (.gh, .ik,
+   .ql, .md, .si), so the key cannot drift from the page. Change a colour in
+   tokens.css and both move together. */
+.site-actions button.tj-btn {
+  white-space: nowrap;
+  background: var(--tajweed);
+  border-color: var(--tajweed);
+  color: var(--tajweed-ink);
+}
+.site-actions button.tj-btn:hover { background: #cf3a30; border-color: #cf3a30; }
+.tj-panel { max-width: 520px; }
+.tj-intro { margin: 2px 0 14px; font-size: 14px; color: #55605c; }
+
+.tj-list { list-style: none; margin: 0; padding: 0; }
+.tj-list li {
+  display: grid;
+  grid-template-columns: 16px minmax(96px, auto) 1fr;
+  align-items: baseline; gap: 12px;
+  padding: 11px 0;
+  border-top: 1px solid var(--rule);
+}
+.tj-dot {
+  width: 13px; height: 13px; border-radius: 50%;
+  background: currentColor;      /* takes the rule's colour from .gh/.ik/... */
+  align-self: center;
+}
+.tj-names { display: flex; flex-direction: column; gap: 2px; }
+.tj-ar {
+  font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', serif;
+  font-size: 19px; line-height: 1.35;
+}
+.tj-tr { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: #8a938f; }
+.tj-desc { font-size: 13.5px; line-height: 1.6; color: var(--ink); }
+
+.tj-note {
+  margin: 16px 0 0; padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  font-size: 12.5px; line-height: 1.7; color: #6d7773;
+}
+
+@media (max-width: 640px) {
+  .tj-list li { grid-template-columns: 14px 1fr; row-gap: 4px; }
+  .tj-desc { grid-column: 2; }
+}
+
+
+/* ---- reference panel: tabs, waqf signs, makharij ---- */
+.tj-tabs { display: flex; gap: 6px; margin: 2px 0 14px; flex-wrap: wrap; }
+.tj-tabs button {
+  cursor: pointer; font: inherit; font-size: 13px;
+  padding: 6px 12px; border-radius: 999px;
+  border: 1px solid var(--rule); background: transparent; color: var(--ink);
+}
+.tj-tabs button:hover { background: #f4f1e8; }
+.tj-tabs button.on {
+  background: var(--accent); border-color: var(--accent); color: #f2efe6;
+}
+
+/* Waqf rows use the same grid as the colour rows, but the first column holds
+   a printed sign rather than a swatch, so it needs real width. */
+.tj-waqf li { grid-template-columns: 46px minmax(104px, auto) 1fr; }
+.wq-sign {
+  font-family: 'IndopakNastaleeq', 'Noto Nastaliq Urdu', serif;
+  font-size: 20px; line-height: 1.2; text-align: center;
+  color: var(--frame);
+  align-self: center;
+}
+
+.tj-fig { margin: 0 0 16px; }
+.tj-fig figcaption {
+  font-size: 13px; font-weight: 600; color: var(--accent);
+  margin-bottom: 6px;
+}
+.tj-sub { margin: 18px 0 2px; font-size: 13.5px; color: var(--accent); }
+.tj-teeth li { grid-template-columns: minmax(128px, auto) 1fr; }
+
+.tj-diagram {
+  display: block; width: 100%; height: auto;
+  aspect-ratio: 1100 / 680;
+  margin: 4px 0 10px; border: 1px solid var(--rule); border-radius: 3px;
+  background: #fff;
+}
+.tj-diagram-lower { aspect-ratio: 1100 / 399; }
+.tj-credit { margin: 10px 0 0; font-size: 12px; color: #8a938f; }
+
+@media (max-width: 640px) {
+  .tj-waqf li { grid-template-columns: 38px 1fr; }
 }

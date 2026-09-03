@@ -53,6 +53,11 @@ export interface Page {
   markers: Marker[]
   /** Printed at the foot of every page in this Mushaf. */
   manzil: number | null
+  /**
+   * True when a para opens on this page. The print bands that line in green;
+   * it is always the page's first ayah line.
+   */
+  paraStart: boolean
 }
 
 /** A mark made by whoever is listening to the student recite. */

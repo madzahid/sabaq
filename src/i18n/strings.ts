@@ -45,6 +45,60 @@ export interface Strings {
     clear: string
   }
 
+  /**
+   * Progress through the current para. Not printed in any Mushaf — the page
+   * header gives the para number and the footer gives the manzil, but neither
+   * answers "how much of this para is left", which is the thing a student
+   * mid-revision actually wants to know.
+   */
+  progress: {
+    /** Accessible name for the whole strip. */
+    label: string
+    /** e.g. "Page 3 of 20". */
+    position: (index: number, total: number) => string
+    /** e.g. "17 pages left". Never called with 0 — see lastPage. */
+    remaining: (n: number) => string
+    /** Shown in place of remaining() on the final page of a para. */
+    lastPage: string
+  }
+
+  /**
+   * The tajweed colour key. The printed Mushaf carries one of these on its
+   * inside pages ("رنگوں کے استعمال کی تفصیل") listing four colours; our text
+   * data marks two more, so the panel lists what the app actually paints.
+   *
+   * The rule NAMES stay Arabic in every language — they are the names of the
+   * rules, not translations of them, and a student learns them in Arabic. Only
+   * the explanations are translated.
+   */
+  tajweed: {
+    /** Button and panel title. */
+    title: string
+    /** One line under the title. */
+    intro: string
+    /** Closing note: colour is an aid, a teacher is not optional. */
+    note: string
+    ghunnah: string
+    ikhfa: string
+    qalqala: string
+    madd: string
+    silent: string
+    /** Tab labels for the three references. */
+    tabColours: string
+    tabWaqf: string
+    tabMakharij: string
+    /** Waqf tab: one line under the title. */
+    waqfIntro: string
+    /** Makharij tab: caption under the diagram. */
+    makharijIntro: string
+    makharijCredit: string
+    /** The diagram's two headings, printed on the artwork in Urdu. */
+    jawUpper: string
+    jawLower: string
+    /** Heading above the list of tooth names. */
+    teeth: string
+  }
+
   loading: string
   loadFailed: (reason: string) => string
 
@@ -84,6 +138,31 @@ const ur: Strings = {
     close: 'بند کریں',
     clear: 'سب نشان مٹا دیں',
   },
+  progress: {
+    label: 'پارے میں پیش رفت',
+    position: (i, total) => `صفحہ ${uiDigits(i, 'ur')} از ${uiDigits(total, 'ur')}`,
+    remaining: (n) => `${uiDigits(n, 'ur')} ${n === 1 ? 'صفحہ' : 'صفحے'} باقی`,
+    lastPage: 'پارے کا آخری صفحہ',
+  },
+  tajweed: {
+    title: 'تجوید',
+    intro: 'متن کے رنگ تجوید کے قواعد بتاتے ہیں۔',
+    note: 'رنگ صرف یاد دہانی ہیں۔ تجوید اُستاد سے سیکھی جاتی ہے، کتاب سے نہیں۔',
+    ghunnah: 'ناک سے آواز، دو حرکت کی مقدار میں۔',
+    ikhfa: 'حرف کو چھپا کر، غنّہ کے ساتھ ہلکا پڑھنا۔',
+    qalqala: 'ساکن حرف میں ہلکا جھٹکا۔',
+    madd: 'آواز کو کھینچنا۔',
+    silent: 'لکھا ہوا ہے مگر پڑھا نہیں جاتا۔',
+    tabColours: 'رنگ',
+    tabWaqf: 'رموزِ اوقاف',
+    tabMakharij: 'مخارج',
+    waqfIntro: 'یہ نشانات بتاتے ہیں کہ کہاں ٹھہرنا ہے اور کہاں نہیں۔',
+    makharijIntro: 'حروف کے مخارج — منہ میں وہ مقام جہاں سے حرف نکلتا ہے۔',
+    makharijCredit: 'یہی نقشہ اسی مصحف کے صفحہ ۵۵۲ پر چھپا ہے۔',
+    jawUpper: 'بالائی جبڑا',
+    jawLower: 'بایاں نصف جبڑا',
+    teeth: 'دانتوں کے نام',
+  },
   loading: 'لوڈ ہو رہا ہے…',
   loadFailed: (reason) => `ڈیٹا لوڈ نہیں ہوا: ${reason}`,
   footer: {
@@ -119,6 +198,31 @@ const en: Strings = {
     close: 'Close',
     clear: 'Clear all marks',
   },
+  progress: {
+    label: 'Progress through this para',
+    position: (i, total) => `Page ${i} of ${total}`,
+    remaining: (n) => (n === 1 ? '1 page left' : `${n} pages left`),
+    lastPage: 'Last page of the para',
+  },
+  tajweed: {
+    title: 'Tajweed',
+    intro: 'The colours in the Quran text mark the rules of tajweed.',
+    note: 'The colours are a reminder only. Tajweed is learnt from a teacher, not from a page.',
+    ghunnah: 'A nasal sound, held for about two counts.',
+    ikhfa: 'The letter is hidden — sounded lightly, with ghunnah.',
+    qalqala: 'A slight echo on a letter with sukoon.',
+    madd: 'The sound is stretched.',
+    silent: 'Written, but not pronounced.',
+    tabColours: 'Colours',
+    tabWaqf: 'Pause marks',
+    tabMakharij: 'Makharij',
+    waqfIntro: 'These marks tell you where to stop and where not to.',
+    makharijIntro: 'Makharij — the point in the mouth each letter is sounded from.',
+    makharijCredit: 'The same chart is printed on page 552 of this Mushaf.',
+    jawUpper: 'The upper jaw',
+    jawLower: 'The left half of the jaw',
+    teeth: 'The teeth, named',
+  },
   loading: 'Loading…',
   loadFailed: (reason) => `Could not load the data: ${reason}`,
   footer: {
@@ -153,6 +257,38 @@ const ar: Strings = {
     empty: 'لا توجد علامات بعد.',
     close: 'إغلاق',
     clear: 'مسح كل العلامات',
+  },
+  progress: {
+    label: 'التقدّم في الجزء',
+    position: (i, total) => `صفحة ${uiDigits(i, 'ar')} من ${uiDigits(total, 'ar')}`,
+    // Arabic counts its nouns by number: 1 takes واحدة, 2 the dual, 3-10 the
+    // plural, 11 and above the singular again. An Arabic reader notices.
+    remaining: (n) => {
+      if (n === 1) return 'صفحة واحدة متبقية'
+      if (n === 2) return 'صفحتان متبقيتان'
+      if (n <= 10) return `${uiDigits(n, 'ar')} صفحات متبقية`
+      return `${uiDigits(n, 'ar')} صفحة متبقية`
+    },
+    lastPage: 'آخر صفحة في الجزء',
+  },
+  tajweed: {
+    title: 'التجويد',
+    intro: 'ألوان النص تدلّ على أحكام التجويد.',
+    note: 'الألوان تذكيرٌ فحسب؛ والتجويد يُؤخذ عن شيخ لا من صفحة.',
+    ghunnah: 'صوت من الأنف بمقدار حركتين.',
+    ikhfa: 'إخفاء الحرف ونطقه خفيفًا مع الغنّة.',
+    qalqala: 'اضطراب يسير في الحرف الساكن.',
+    madd: 'إطالة الصوت.',
+    silent: 'يُكتب ولا يُنطق.',
+    tabColours: 'الألوان',
+    tabWaqf: 'رموز الأوقاف',
+    tabMakharij: 'المخارج',
+    waqfIntro: 'هذه العلامات تدلّ على مواضع الوقف والوصل.',
+    makharijIntro: 'المخارج — موضع خروج الحرف من الفم.',
+    makharijCredit: 'هذا الرسم مطبوع في صفحة ٥٥٢ من هذا المصحف.',
+    jawUpper: 'الفكّ الأعلى',
+    jawLower: 'النصف الأيسر من الفكّ',
+    teeth: 'أسماء الأسنان',
   },
   loading: 'جارٍ التحميل…',
   loadFailed: (reason) => `تعذّر تحميل البيانات: ${reason}`,

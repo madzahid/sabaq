@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { internalPage, juzIndex, printedPage, printedRange, surahIndex } from '../db/quran'
+import { uiDigits } from '../i18n/digits'
 import { ENDONYM, LOCALES } from '../i18n/locale'
 import { SURAH_NAMES } from '../i18n/surahs'
 import { useLocale } from '../i18n/useLocale'
@@ -15,6 +16,7 @@ interface Props {
   luqmaCount: number
   ataknaCount: number
   onReview: () => void
+  onTajweed: () => void
 }
 
 /**
@@ -23,6 +25,7 @@ interface Props {
  */
 export default function SiteHeader({
   pageNo, surah, juz, onGo, hifzActive, onToggleHifz, luqmaCount, ataknaCount, onReview,
+  onTajweed,
 }: Props) {
   const { locale, t, setLocale } = useLocale()
 
@@ -74,7 +77,7 @@ export default function SiteHeader({
             }}
           >
             {surahs.map((s) => (
-              <option key={s.n} value={s.n}>{s.n} · {SURAH_NAMES[s.n]}</option>
+              <option key={s.n} value={s.n}>{uiDigits(s.n, locale)} · {SURAH_NAMES[s.n]}</option>
             ))}
           </select>
         </label>
@@ -90,19 +93,22 @@ export default function SiteHeader({
             }}
           >
             {juzs.map((j) => (
-              <option key={j.n} value={j.n}>{t.nav.juz} {j.n}</option>
+              <option key={j.n} value={j.n}>{t.nav.juz} {uiDigits(j.n, locale)}</option>
             ))}
           </select>
         </label>
 
         <label className="pagebox">
           <span className="sr-only">{t.nav.pageNumber}</span>
+          {/* Latin digits, deliberately: type="number" only accepts ASCII,
+              and an Urdu reader typing ۳۶۳ into it would get nothing. The
+              total beside it is display text, so that one is localised. */}
           <input
             type="number" min={firstPrinted} max={lastPrinted}
             value={printedPage(pageNo)}
             onChange={(e) => onGo(internalPage(Number(e.target.value)))}
           />
-          <span className="of">/ {lastPrinted}</span>
+          <span className="of">/ {uiDigits(lastPrinted, locale)}</span>
         </label>
 
         <button onClick={() => onGo(pageNo + 1)} aria-label={t.nav.next}>◀</button>
@@ -137,6 +143,12 @@ export default function SiteHeader({
             {t.atakna(ataknaCount)}
           </button>
         )}
+        {/* The colour key. A reader who has never been taught tajweed sees
+            coloured letters and no explanation anywhere in the app. */}
+        <button className="tj-btn" onClick={onTajweed} aria-label={t.tajweed.title}>
+          <span aria-hidden="true">◕</span> {t.tajweed.title}
+        </button>
+
         <button
           className={hifzActive ? 'primary on' : 'primary'}
           onClick={onToggleHifz}

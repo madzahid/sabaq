@@ -31,6 +31,23 @@
      the GLYPHS, this marks the rule BENEATH the word. */
   --atakna-line:#cf2118;
 
+  /* سورة heading band, sampled from the printed colour Mushaf. The ribbon is
+     a light green with deep-green lettering; the two count boxes are white. */
+  --band-fill: #dceec0;
+  --band-edge: #1b7a3e;
+  --band-ink:  #0f4c3a;
+
+  /* The tajweed reference button. Deliberately neither --gold (hifz mode)
+     nor --accent (the header itself): three actions sit side by side and each
+     has to be findable without reading it.
+
+     Its own red, NOT --atakna-line or --ghunnah. Those two reds carry meaning
+     inside the page — a mistake, and a tajweed rule — and a chrome button that
+     borrowed either would start to look like one of them. Deeper and less
+     saturated than both, so it reads as a control against the green bar. */
+  --tajweed:     #b8322a;
+  --tajweed-ink: #fff3f1;
+
   --line-h:   56px;
   --ar-size:  26px;
 }

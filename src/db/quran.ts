@@ -1,4 +1,5 @@
 import initSqlJs, { type Database } from 'sql.js'
+import { JUZ_START_PAGE } from '../data/juzStart'
 import type { Line, LineType, Marker, MarkerKind, Page, Word } from '../types'
 
 let db: Database | null = null
@@ -135,12 +136,16 @@ export function getPage(page: number): Page | null {
 
   return {
     page,
-    juz: meta.juz as number,
+    // Not meta.juz: that column records the para the page's FIRST AYAH falls
+    // in by the juz division, which disagrees with the Indo-Pak para division
+    // on three pages. See pageJuz().
+    juz: pageJuz(page),
     surah: meta.surah as number,
     firstAyah: meta.first_ayah as string,
     lines,
     markers,
     manzil: (mz?.manzil as number) ?? null,
+    paraStart: JUZ_START_PAGE[pageJuz(page)] === page,
   }
 }
 
@@ -217,11 +222,23 @@ export function surahIndex(): JumpEntry[] {
   return out
 }
 
-/** Page each of the 30 juz begins on. */
+/**
+ * Page each of the 30 paras begins on, straight from the print.
+ *
+ * This was twice wrong before. `MIN(page) FROM pages GROUP BY juz` sent paras
+ * 4, 21 and 23 a page late. Resolving the metadata's first ayah to its page
+ * fixed those three but broke 7, 11, 14 and 20, because the Indo-Pak para
+ * division and the juz division in that metadata disagree in BOTH directions —
+ * para 21 begins an ayah earlier than the metadata says, para 7 an ayah later.
+ *
+ * Neither derivation is trustworthy, so the pages are read off the Mushaf
+ * itself. See src/data/juzStart.ts.
+ */
 export function juzIndex(): JumpEntry[] {
   if (juzCache) return juzCache
-  juzCache = rowsOf('SELECT juz, MIN(page) AS page FROM pages GROUP BY juz ORDER BY juz')
-    .map((r) => ({ n: r.juz as number, page: r.page as number }))
+  juzCache = Object.entries(JUZ_START_PAGE)
+    .map(([n, page]) => ({ n: Number(n), page }))
+    .sort((x, y) => x.n - y.n)
   return juzCache
 }
 
@@ -283,3 +300,86 @@ export function wordContext(ids: number[]): WordContext[] {
 }
 
 export const PAGE_COUNT = 548
+
+/* ------------------------------------------------------------------ *
+ * Which para a page belongs to
+ *
+ * Every para in this Mushaf opens on the first ayah line of a page — verified
+ * for all 30 against the green band the print puts behind that line. So a page
+ * belongs to exactly one para, and the whole question is a range lookup. No
+ * majority rule, no shared boundary pages, no page that is half one para and
+ * half another.
+ * ------------------------------------------------------------------ */
+
+/** The para this page belongs to. */
+export function pageJuz(page: number): number {
+  let ans = 1
+  for (let j = 1; j <= 30; j++) {
+    const start = JUZ_START_PAGE[j]
+    if (start != null && start <= page) ans = j
+    else break
+  }
+  return ans
+}
+
+/* ------------------------------------------------------------------ *
+ * Progress through a para
+ *
+ * A student does not revise "pages", he revises a para. The one thing he
+ * wants to know mid-sitting is how much of it is left, and no printed Mushaf
+ * can tell him — the page footer says منزل and the header says the para
+ * number, but neither says "three of twenty".
+ * ------------------------------------------------------------------ */
+
+export interface JuzProgress {
+  juz: number
+  /** 1-based position of this page within its para. */
+  index: number
+  /** Pages the para occupies. */
+  total: number
+  /** Pages still to come after this one. */
+  remaining: number
+  firstPage: number
+  lastPage: number
+}
+
+let juzSpanCache: Map<number, [number, number]> | null = null
+
+function juzSpans(): Map<number, [number, number]> {
+  if (juzSpanCache) return juzSpanCache
+  // Contiguous by construction: each para runs from its own first page to the
+  // page before the next para's, and the last one to the end of the Mushaf.
+  juzSpanCache = new Map()
+  for (let j = 1; j <= 30; j++) {
+    const a = JUZ_START_PAGE[j]
+    if (a == null) continue
+    const next = JUZ_START_PAGE[j + 1]
+    juzSpanCache.set(j, [a, next != null ? next - 1 : PAGE_COUNT])
+  }
+  return juzSpanCache
+}
+
+/**
+ * Where this page sits inside its para.
+ *
+ * `pages` records exactly one juz per page, so a page carrying the seam
+ * between two paras is counted under the one it is listed against. That is
+ * how a student speaks about it too — "this page is in para 5" — and it keeps
+ * the count honest: index and total are whole pages, never fractions.
+ *
+ * Takes the juz as an argument rather than looking it up: every caller has
+ * already loaded the page and knows it.
+ */
+export function juzProgress(page: number, juz: number): JuzProgress | null {
+  const span = juzSpans().get(juz)
+  if (!span) return null
+  const [a, b] = span
+  return {
+    juz,
+    index: page - a + 1,
+    total: b - a + 1,
+    remaining: Math.max(0, b - page),
+    firstPage: a,
+    lastPage: b,
+  }
+}

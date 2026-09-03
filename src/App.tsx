@@ -10,6 +10,7 @@ import MushafPage from './components/MushafPage'
 import SiteHeader from './components/SiteHeader'
 import SiteFooter from './components/SiteFooter'
 import ReviewPanel from './components/ReviewPanel'
+import TajweedPanel from './components/TajweedPanel'
 import type { Page } from './types'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
   const [pageNo, setPageNo] = useState(loadLastPage)
   const [error, setError] = useState<string | null>(null)
   const [reviewing, setReviewing] = useState(false)
+  const [tajweedOpen, setTajweedOpen] = useState(false)
 
   // Captured once so the open-on-mount effect does not re-run as the reader
   // turns pages. The database is opened exactly once per session.
@@ -67,6 +69,7 @@ export default function App() {
         luqmaCount={listening.luqmaCount}
         ataknaCount={listening.ataknaCount}
         onReview={() => setReviewing(true)}
+        onTajweed={() => setTajweedOpen(true)}
       />
 
       <main>
@@ -86,6 +89,8 @@ export default function App() {
           onClear={listening.clear}
         />
       )}
+
+      {tajweedOpen && <TajweedPanel onClose={() => setTajweedOpen(false)} />}
 
       {web && <SiteFooter />}
     </div>

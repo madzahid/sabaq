@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { printedPage, wordContext } from '../db/quran'
-import { pageDigits } from '../i18n/digits'
+import { pageDigits, uiDigits } from '../i18n/digits'
 import { SURAH_NAMES } from '../i18n/surahs'
 import { useLocale } from '../i18n/useLocale'
 import type { Mistake } from '../types'
@@ -21,7 +21,7 @@ interface Props {
  * ayah, grouped by page, and jumps there on tap.
  */
 export default function ReviewPanel({ mistakes, onGo, onClose, onClear }: Props) {
-  const { t } = useLocale()
+  const { locale, t } = useLocale()
 
   // Resolved here rather than stored: a Mistake is only a word id, which keeps
   // what we persist small and lets the database stay the single source of
@@ -51,7 +51,8 @@ export default function ReviewPanel({ mistakes, onGo, onClose, onClear }: Props)
         {rows.map(([page, items]) => (
           <section key={page} className="review-page">
             <button className="review-pageno" onClick={() => { onGo(page); onClose() }}>
-              {t.nav.page} {pageDigits(printedPage(page))}
+              {/* Translated label, so localised digits — see MushafPage. */}
+              {t.nav.page} {uiDigits(printedPage(page), locale)}
             </button>
             <ul>
               {items.map((it) => (
