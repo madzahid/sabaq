@@ -1,7 +1,11 @@
 @font-face {
   font-family: 'IndopakNastaleeq';
-  /* TODO: bundle this file. A CDN dependency breaks the offline promise. */
-  src: url('https://static-cdn.tarteel.ai/qul/fonts/nastaleeq/Hanafi/normal-v4.2.2/with-waqf-lazmi/font.ttf') format('truetype');
+  /* Bundled, not fetched. A CDN we do not control deciding what typeface the
+     Quran renders in is not acceptable, and it made the offline promise false
+     in the native build. The remote copy is kept only as a fallback for the
+     case where the local file is missing from a deploy. */
+  src: url('/fonts/indopak-nastaleeq.ttf') format('truetype'),
+       url('https://static-cdn.tarteel.ai/qul/fonts/nastaleeq/Hanafi/normal-v4.2.2/with-waqf-lazmi/font.ttf') format('truetype');
   font-display: swap;
 }
 

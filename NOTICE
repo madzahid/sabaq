@@ -1,0 +1,115 @@
+NOTICE
+======
+
+This file records where everything in this repository came from, so that
+anyone reading, forking or verifying the app can trace each part to its
+source. It is written for a Quran application, where provenance matters more
+than it does in ordinary software: a reader is entitled to know exactly how
+the text in front of them was produced.
+
+
+1. The Quranic text
+-------------------
+
+The Quranic text is the word of Allah, sent for all mankind. No claim of
+ownership or licence is made over it by anyone, this project included.
+
+What CAN be discussed in terms of rights is everything around it: the software,
+the databases that describe the layout, the annotations, and the artwork. Those
+are covered below.
+
+
+2. Third-party data
+-------------------
+
+The database the app ships, `public/data/quran.sqlite`, is BUILT — it is not
+transcribed by hand and contains no text typed by this project. Its inputs:
+
+  Quranic Universal Library (QUL) — https://qul.tarteel.ai
+    - "Indopak 16 lines layout"  ->  data/source/taj-indopak-16-lines.db
+        Which words fall on which line of which page. This is the source of
+        every line break in the app.
+    - "Indopak Nastaleeq script — Word by Word"  ->  data/source/indopak-nastaleeq.db
+        The word-by-word Indo-Pak text.
+    - Metadata: surah names, ayah records, juz, ruku, rub, sajda, manzil, hizb
+        ->  data/source/metadata/
+    - The Indopak Nastaleeq font (Hanafi, with waqf lazmi)
+        ->  public/fonts/indopak-nastaleeq.ttf
+
+  alfurqan (npm)
+    The Uthmani tajweed-annotated text, from which the per-letter tajweed rules
+    are aligned onto the Indo-Pak script. Used by pipeline/lib/extract-source.js.
+
+The two QUL source databases are gitignored, as third-party data. The built
+`quran.sqlite` is committed so the app runs after `npm install`.
+
+
+3. The printed edition
+----------------------
+
+The app models a specific printed copy:
+
+    16-line Indo-Pak Mushaf, colour-coded tajweed
+    Shan Maktaba Madina Printing Press, March 2011
+    Text certified by six named qaris and two registered proof-readers of the
+    Auqaf Department, Government of the Punjab
+
+That copy was used in two different ways, and the distinction matters.
+
+  (a) VERIFIED against it — facts, checked and recorded, not copied:
+        - the offset between our page index and the printed page number
+        - the page each of the 30 paras begins on (src/data/juzStart.ts)
+        - the position, side, numbering and spacing of the ruku, sajdah and
+          para-quarter marks
+        - the content of the surah heading band and the page header
+      These are statements of fact about a published book. They were determined
+      by measurement and by reading the book, and are recorded as data.
+
+  (b) COPIED from it — the publisher's own artwork:
+        - public/img/makharij-upper.webp
+        - public/img/makharij-lower.webp
+      These are extracted, cropped and re-encoded from the makharij diagrams
+      printed on page 552 of that edition. They are the publisher's
+      illustrations, not scripture, and no licence to redistribute them has
+      been sought or granted. See section 5.
+
+
+4. Licence
+----------
+
+  Code — everything under src/, pipeline/, scripts/, and the build
+  configuration: MIT, (c) Zahid Abbasi. See LICENSE.
+
+  public/data/quran.sqlite — a derived work of the QUL databases named in
+  section 2. Use it under QUL's terms, not under the MIT licence above. The
+  MIT licence covers the code that built it, not the data it contains.
+
+  public/fonts/indopak-nastaleeq.ttf — redistributed from QUL, under its own
+  licence.
+
+  public/img/makharij-*.webp — NOT covered by the MIT licence. See section 5.
+
+
+5. Open question, stated plainly
+--------------------------------
+
+The makharij diagrams in section 3(b) are the only part of this repository
+copied from a commercial publication rather than derived from an open dataset
+or from fact. Before this repository is made public, one of the following
+should happen:
+
+    - permission is obtained from the publisher, or
+    - the diagrams are redrawn from scratch, or
+    - they are removed from the app.
+
+They are noted here rather than quietly shipped, because a Quran application
+that is careless about other people's rights has no standing to ask anyone to
+trust its text.
+
+
+6. Corrections
+--------------
+
+If you find an error in the Quranic text or its layout, please report it. An
+error in a Mushaf is a serious matter and takes precedence over every feature
+request in this repository.

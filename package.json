@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "pipeline": "node pipeline/build.js",
     "cap:sync": "npm run build && cap sync",
-    "prebuild": "node scripts/copy-wasm.js",
+    "prebuild": "node scripts/copy-wasm.js && node scripts/build-seo.js",
     "predev": "node scripts/copy-wasm.js",
     "markers": "python3 pipeline/lib/build_markers.py"
   },
@@ -25,6 +25,7 @@
     "@types/react-dom": "^18.3.0",
     "@types/sql.js": "^1.4.11",
     "@vitejs/plugin-react": "^4.3.1",
+    "alfurqan": "^0.0.3",
     "typescript": "^5.5.4",
     "vite": "^5.4.2"
   },

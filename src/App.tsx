@@ -5,6 +5,7 @@ import { useListening } from './features/useListening'
 import { usePageTurn } from './features/usePageTurn'
 import { useLocale } from './i18n/useLocale'
 import { loadLastPage, saveLastPage } from './lib/lastPage'
+import { readPageFromUrl, writePageToUrl } from './lib/url'
 import { isWeb } from './lib/platform'
 import MushafPage from './components/MushafPage'
 import SiteHeader from './components/SiteHeader'
@@ -16,7 +17,10 @@ import type { Page } from './types'
 export default function App() {
   const [page, setPage] = useState<Page | null>(null)
   // Page 1 for a new reader, otherwise wherever they left off.
-  const [pageNo, setPageNo] = useState(loadLastPage)
+  // A page in the URL wins over the remembered one: it means the reader
+  // followed a link to a specific page, and honouring the bookmark instead
+  // would silently take them somewhere else.
+  const [pageNo, setPageNo] = useState(() => readPageFromUrl() ?? loadLastPage())
   const [error, setError] = useState<string | null>(null)
   const [reviewing, setReviewing] = useState(false)
   const [tajweedOpen, setTajweedOpen] = useState(false)
@@ -42,6 +46,7 @@ export default function App() {
     setPageNo(clamped)
     setPage(getPage(clamped))
     saveLastPage(clamped)
+    writePageToUrl(clamped)
     window.scrollTo({ top: 0 })
   }, [])
 

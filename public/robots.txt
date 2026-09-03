@@ -1,0 +1,5 @@
+# https://quranforhifz.com
+User-agent: *
+Allow: /
+
+Sitemap: https://quranforhifz.com/sitemap.xml

@@ -125,6 +125,31 @@ Made for those memorising the Quran, with the intention of sadaqah jariyah.
 
 ## Licence
 
-Code: MIT © Zahid Abbasi.
+The Quranic text is the word of Allah ﷻ, sent for all mankind. It is not ours
+to licence, and no claim is made over it.
 
-The Quranic text is the word of Allah ﷻ, sent for all mankind. It is not ours to licence, and no claim is made over it.
+Everything else divides:
+
+| | |
+|---|---|
+| Code — `src/`, `pipeline/`, `scripts/`, build config | MIT © Zahid Abbasi |
+| `public/data/quran.sqlite` | derived from the QUL databases — **use under QUL's terms, not MIT** |
+| `public/fonts/indopak-nastaleeq.ttf` | redistributed from QUL, under its own licence |
+| `public/img/makharij-*.webp` | the publisher's artwork — **not MIT**, see NOTICE §5 |
+
+The MIT licence covers the code that builds the database, not the data inside
+it. **[`NOTICE`](NOTICE) records where every part came from**, including one
+unresolved question that should be settled before this repository is made
+public.
+
+## Provenance
+
+Layout, word text and tajweed annotations are built from open datasets — see
+`pipeline/README.md`. The app models one specific printed copy: a 16-line
+Indo-Pak Mushaf, Shan Maktaba Madina Printing Press, March 2011, certified by
+six named qaris and two registered proof-readers of the Punjab Auqaf
+Department. Page offsets, para start pages and every margin mark were verified
+against it. `docs/DATA.md` records the investigation.
+
+The text has **not yet been reviewed by a qari**. Until it has, treat this as
+pre-release.
