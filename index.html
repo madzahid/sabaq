@@ -20,7 +20,14 @@
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="apple-touch-icon" href="/img/icon-192.png" />
+
+    <!-- .ico carries 16/32/48/64 for browsers and bookmark bars; the SVG is
+         used by anything that prefers vector, so the mark stays crisp on a
+         high-DPI tab strip. The small sizes inside the .ico drop the magenta
+         frame — at 16px a one-pixel ring is noise, not a border. -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
   </head>
   <body>
     <div id="root"></div>

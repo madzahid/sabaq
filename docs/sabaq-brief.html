@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quran for Hifz — Product Brief</title>
+<style>
+  :root{
+    --ink:#1d2321;
+    --ink-soft:#4a5652;
+    --ink-faint:#7c8783;
+    --paper:#fbf9f4;
+    --paper-2:#f4f0e7;
+    --line:#e2dcd0;
+    --green:#12594a;
+    --green-2:#0d3f34;
+    --gold:#9a7b32;
+    --gold-soft:#f0e6cd;
+    --red:#8f3a2f;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:ui-serif,Georgia,"Iowan Old Style","Times New Roman",serif;
+    font-size:17px;
+    line-height:1.62;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:0 26px 90px}
+
+  /* ---------- masthead ---------- */
+  header.mast{
+    background:linear-gradient(160deg,var(--green-2),var(--green));
+    color:#f3efe6;
+    padding:58px 26px 50px;
+    margin-bottom:46px;
+    border-bottom:3px solid var(--gold);
+  }
+  .mast-in{max-width:820px;margin:0 auto}
+  .eyebrow{
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:11px;letter-spacing:.19em;text-transform:uppercase;
+    color:var(--gold-soft);opacity:.85;margin:0 0 14px;
+  }
+  h1{
+    font-size:clamp(38px,7vw,58px);
+    line-height:1.02;margin:0 0 6px;font-weight:600;letter-spacing:-.02em;
+  }
+  .arabic{
+    font-size:clamp(26px,5vw,36px);
+    opacity:.72;margin:0 0 18px;font-weight:400;
+    font-family:"Amiri","Scheherazade New","Geeza Pro","Noto Naskh Arabic",serif;
+    direction:rtl;
+  }
+  .tagline{font-size:19px;opacity:.9;margin:0;max-width:44ch;line-height:1.5}
+  .meta{
+    margin-top:30px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);
+    font-family:ui-sans-serif,system-ui,sans-serif;font-size:12.5px;
+    letter-spacing:.04em;opacity:.72;
+  }
+
+  /* ---------- typography ---------- */
+  h2{
+    font-size:13px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;
+    font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;
+    color:var(--gold);margin:56px 0 4px;
+  }
+  h2 + .h2sub{
+    font-size:27px;line-height:1.25;margin:0 0 20px;font-weight:600;
+    letter-spacing:-.01em;color:var(--ink);
+  }
+  h3{font-size:19px;margin:32px 0 8px;font-weight:600;letter-spacing:-.005em}
+  p{margin:0 0 16px}
+  strong{font-weight:600;color:var(--green-2)}
+  em{font-style:italic;color:var(--ink-soft)}
+  ul,ol{margin:0 0 18px;padding-left:22px}
+  li{margin-bottom:9px}
+  hr{border:0;border-top:1px solid var(--line);margin:46px 0}
+  a{color:var(--green);text-decoration-color:var(--line);text-underline-offset:3px}
+
+  .lead{font-size:19.5px;line-height:1.55;color:var(--ink-soft)}
+
+  /* ---------- components ---------- */
+  .callout{
+    background:var(--paper-2);
+    border-left:3px solid var(--gold);
+    padding:20px 24px;margin:26px 0;border-radius:0 6px 6px 0;
+  }
+  .callout p:last-child{margin-bottom:0}
+  .callout .label{
+    display:block;font-family:ui-sans-serif,system-ui,sans-serif;
+    font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:8px;font-weight:600;
+  }
+
+  table{width:100%;border-collapse:collapse;margin:20px 0 26px;font-size:15.5px}
+  th{
+    text-align:left;font-family:ui-sans-serif,system-ui,sans-serif;
+    font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-faint);font-weight:600;
+    padding:0 12px 9px 0;border-bottom:1.5px solid var(--line);
+  }
+  td{padding:12px 12px 12px 0;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5}
+  td:last-child,th:last-child{padding-right:0}
+  tr:last-child td{border-bottom:none}
+  .ar{
+    font-family:"Amiri","Scheherazade New","Geeza Pro","Noto Naskh Arabic",serif;
+    direction:rtl;font-size:18px;
+  }
+
+  .phase{
+    display:flex;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);
+  }
+  .phase:last-of-type{border-bottom:none}
+  .phase-n{
+    flex:0 0 44px;height:44px;border-radius:50%;
+    background:var(--green);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:ui-sans-serif,system-ui,sans-serif;font-size:15px;font-weight:600;
+  }
+  .phase-b{flex:1;min-width:0}
+  .phase-b h4{margin:8px 0 5px;font-size:18px;font-weight:600}
+  .phase-b p{margin:0;color:var(--ink-soft);font-size:15.5px;line-height:1.55}
+  .ship{
+    display:inline-block;margin-top:8px;
+    font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;
+    letter-spacing:.09em;text-transform:uppercase;
+    background:var(--gold-soft);color:var(--gold);
+    padding:3px 9px;border-radius:3px;font-weight:600;
+  }
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);margin:24px 0;border:1px solid var(--line)}
+  .cell{background:var(--paper);padding:20px}
+  .cell h4{margin:0 0 6px;font-size:16.5px;font-weight:600}
+  .cell p{margin:0;font-size:15px;color:var(--ink-soft);line-height:1.5}
+
+  .pill{
+    display:inline-block;font-family:ui-sans-serif,system-ui,sans-serif;
+    font-size:11.5px;letter-spacing:.05em;padding:3px 10px;border-radius:20px;
+    background:var(--paper-2);color:var(--ink-soft);border:1px solid var(--line);
+    margin:0 5px 6px 0;
+  }
+
+  .mock{
+    background:#fff;border:1px solid var(--line);border-radius:10px;
+    padding:22px;margin:24px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  .mock-bar{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--line);
+    font-family:ui-sans-serif,system-ui,sans-serif;font-size:12.5px;color:var(--ink-faint);
+  }
+  .rec{color:var(--red);font-weight:600}
+  .rec::before{content:"●";margin-right:6px}
+  .line-ar{
+    direction:rtl;text-align:center;
+    font-family:"Amiri","Scheherazade New","Geeza Pro","Noto Naskh Arabic",serif;
+    font-size:27px;line-height:2.3;color:var(--ink);
+  }
+  .mk{border-bottom:2.5px solid var(--red);padding-bottom:2px}
+  .mk2{background:var(--gold-soft);border-radius:3px;padding:1px 4px}
+  .mock-note{
+    font-family:ui-sans-serif,system-ui,sans-serif;font-size:12.5px;
+    color:var(--ink-faint);margin:14px 0 0;text-align:center;
+  }
+
+  footer{
+    margin-top:64px;padding-top:24px;border-top:1px solid var(--line);
+    font-family:ui-sans-serif,system-ui,sans-serif;font-size:13px;color:var(--ink-faint);
+  }
+
+  @media (max-width:620px){
+    body{font-size:16.5px}
+    .grid{grid-template-columns:1fr}
+    .wrap{padding:0 20px 70px}
+    header.mast{padding:44px 20px 38px}
+    table{font-size:14.5px}
+    .phase{gap:14px}
+  }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-in">
+    <p class="eyebrow">Product Brief · Draft 1</p>
+    <h1>Quran for Hifz</h1>
+    <p class="arabic">سبق</p>
+    <p class="tagline">A Quran reader built for memorisation — and for the person sitting across from the child, listening.</p>
+    <p class="meta">Prepared for Zahid · 14 August 2026</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<p class="lead">Every hifz app on the market is a reader with a bookmark. None of them serve the moment that actually decides whether a child memorises the Quran: a student reciting from memory while someone listens, catches the slips, and feeds the prompt. Sabaq is built around that moment.</p>
+
+<hr>
+
+<h2>01 — The problem</h2>
+<p class="h2sub">Memorisation happens out loud, but the tools are silent</p>
+
+<p>A child memorising the Quran works from a fixed printed page — in South Asia, the <strong>16-line Indo-Pak Mushaf</strong>, often with colour-coded tajwid. The page layout is not decoration; it is the memory itself. A hafiz recalls that a verse sits third line from the top on the left-hand page. Any app that reflows the text destroys the thing being memorised.</p>
+
+<p>The PDF collections circulating online — such as the juz-by-juz 16-line colour tajwid set Zahid's son currently uses — solve authenticity and layout, and nothing else. They cannot hide a line so a child can test recall. They cannot loop an ayah. They cannot record where he stumbled last Tuesday. And they offer nothing at all to the parent or teacher listening to him recite.</p>
+
+<div class="callout">
+  <span class="label">The insight</span>
+  <p>The listener is the missing user. Every hifz product builds for the student alone, but memorisation is verified by a second person — a teacher, a parent, a study partner — holding the Mushaf and marking mistakes in pencil. Digitise <em>that</em> and you own a workflow nobody has touched.</p>
+</div>
+
+<h2>02 — Who it is for</h2>
+<p class="h2sub">Three people, one session</p>
+
+<div class="grid">
+  <div class="cell">
+    <h4>The student</h4>
+    <p>A child or adult memorising, typically 5–20 lines a day, revising far more than that. Needs the exact page they know, offline, plus a way to self-test.</p>
+  </div>
+  <div class="cell">
+    <h4>The listener</h4>
+    <p>A parent, ustadh, or peer following along while the student recites. Hands and eyes are busy. Needs to mark a slip in one tap without breaking the child's flow.</p>
+  </div>
+  <div class="cell">
+    <h4>The teacher over time</h4>
+    <p>The same listener, weeks later, deciding what to revise. Needs to see which pages keep bleeding and which are solid — evidence, not memory.</p>
+  </div>
+  <div class="cell">
+    <h4>Reach</h4>
+    <p>Web, Android, iOS, iPad from a single codebase. Full offline operation is non-negotiable — much of the audience studies without reliable data.</p>
+  </div>
+</div>
+
+<h2>03 — Feature one</h2>
+<p class="h2sub">A Mushaf that is pixel-faithful to the printed page</p>
+
+<p>Rendered from a <strong>glyph font plus page-and-line layout data</strong>, not from PDFs and not from reflowable text. This is the approach Quran.com uses. It gives an exact reproduction of the 16-line page that stays crisp at any zoom, weighs a fraction of page images, and — critically — makes every individual word a tappable element that can be highlighted, blurred, or synced to audio.</p>
+
+<ul>
+  <li><strong>Blur &amp; reveal.</strong> Hide a line, an ayah, or the whole page; recall it; tap to check. This single feature is the reason a student opens the app alone.</li>
+  <li><strong>Tajwid colouring</strong> preserved from the printed edition, with a tap-a-letter legend explaining which rule applies.</li>
+  <li><strong>Loop a range</strong> — repeat ayahs 5 to 8 twenty times with a chosen qari, with the current word highlighted as he recites.</li>
+  <li><strong>Two-page spread on iPad</strong>, matching how the physical Mushaf is actually read.</li>
+  <li><strong>Fully offline.</strong> Fonts and layout data ship inside the app; audio caches on demand.</li>
+</ul>
+
+<h2>04 — Feature two</h2>
+<p class="h2sub">Listening mode — marking mistakes as the child recites</p>
+
+<p>The student recites from memory. The listener holds the device open at the same page and taps a word the instant something goes wrong. That is the entire interaction.</p>
+
+<div class="callout">
+  <span class="label">Design constraint</span>
+  <p>The listener is looking at the page and concentrating on the child's voice. No dialogs, no menus, no confirmations. <strong>One tap on the word, and the mark is committed.</strong> A small chip fades in for three seconds offering to reclassify the mark — ignore it and it saves as the default.</p>
+</div>
+
+<div class="mock">
+  <div class="mock-bar">
+    <span class="rec">Recording · 04:12</span>
+    <span>Ahmad · سبق · Page 262</span>
+  </div>
+  <p class="line-ar">وَإِذَا سَأَلَكَ عِبَادِى عَنِّى فَإِنِّى <span class="mk2">قَرِيبٌ</span> أُجِيبُ دَعْوَةَ <span class="mk">ٱلدَّاعِ</span></p>
+  <p class="mock-note">Gold = hesitation (اٹکنا) &nbsp;·&nbsp; Red underline = prompt given (لقمہ)</p>
+</div>
+
+<h3>The error taxonomy</h3>
+<p>Teachers do not count generic "mistakes" — different slips carry different meaning, and the app should record them separately:</p>
+
+<table>
+  <tr><th style="width:30%">Mark</th><th>What it means, and why it matters</th></tr>
+  <tr><td><span class="ar">اٹکنا</span> · Hesitation</td><td>Paused, then recovered unaided. Knowledge is present but fragile.</td></tr>
+  <tr><td><span class="ar">لقمہ</span> · Prompt given</td><td>Needed to be told the word. <strong>This is the metric madrasas already grade by</strong> — luqmas per page. Make it the one-tap default.</td></tr>
+  <tr><td>Substitution</td><td>Said a different word than the text.</td></tr>
+  <tr><td>Omission / addition</td><td>Skipped or inserted a word or ayah.</td></tr>
+  <tr><td><span class="ar">متشابہات</span> · Parallel jump</td><td>Slid into a near-identical verse elsewhere in the Quran. The single largest cause of hifz breakdown.</td></tr>
+  <tr><td>Tajwid slip</td><td>Madd length, ghunnah, makhraj. Counted separately — a pronunciation fault is not a memory fault, and conflating them punishes good memorisation.</td></tr>
+</table>
+
+<h3>Record the session automatically</h3>
+<p>Audio records for the whole recitation, and every mark becomes a timestamp into that recording. Afterwards the student taps a mark and hears <em>the exact moment he slipped, in his own voice.</em> Cheap to build, and nothing else teaches self-correction as fast. It also lets a parent review a session they were not present for.</p>
+
+<h3>Catch hesitations without speech recognition</h3>
+<p>True recitation-checking ASR is expensive and hard. It is also unnecessary at first: detect silences longer than about two seconds and surface them as <em>suggested</em> hesitations for the listener to confirm or dismiss after the session. That catches most stumbles with basic audio analysis. Real ASR belongs in version three, if ever.</p>
+
+<h3>The mutashabihat advantage</h3>
+<p>Every pair of near-identical ayahs in the Quran can be computed in advance from the text. So when a student jumps from one verse into its twin, Sabaq does not merely log an error — it shows both verses side by side with the differing words highlighted and adds <em>the pair</em> to his revision queue. No paper system can do this. It is the feature people would switch for.</p>
+
+<h2>05 — Feature three</h2>
+<p class="h2sub">What the sessions add up to</p>
+
+<p>Each session saves as a record: student, date, type (<span class="ar">سبق</span> new lesson / <span class="ar">سبقی</span> recent revision / <span class="ar">منزل</span> old revision), the range recited, every mark with its timestamp, the audio, and a grade auto-suggested from the luqma count that the listener can override.</p>
+
+<p>Across weeks this becomes a <strong>weakness heat map laid over the actual Mushaf pages</strong>. A teacher sees at a glance which pages of a juz keep failing, and the revision queue prioritises them — instead of the usual blind cycling that lets old memorisation quietly rot while new lessons pile on top.</p>
+
+<h2>06 — Content sources</h2>
+<p class="h2sub">Free, verified, and properly credited</p>
+
+<table>
+  <tr><th style="width:34%">Source</th><th>Provides</th></tr>
+  <tr><td>QUL — Quranic Universal Library <br><span style="color:var(--ink-faint);font-size:14px">qul.tarteel.ai</span></td><td>The core asset. Mushaf layout tables (page → line → word), Indo-Pak and Uthmani glyph fonts, tajwid-coloured text, word-by-word translation, recitations with per-word timing.</td></tr>
+  <tr><td>Quran.com API v4</td><td>Text, translations, tafsir over a free REST API.</td></tr>
+  <tr><td>EveryAyah</td><td>Per-ayah recitation audio across dozens of qaris.</td></tr>
+  <tr><td>Tanzil / King Fahd Complex</td><td>Authoritative text to validate against before shipping.</td></tr>
+</table>
+<p style="font-size:15.5px;color:var(--ink-soft)">Text accuracy is a trust issue, not a technical one. Validate against a second independent source and credit the edition inside the app.</p>
+
+<h2>07 — How it gets built</h2>
+<p class="h2sub">One codebase, four platforms</p>
+
+<p><strong>React + TypeScript, built with Vite, wrapped in Capacitor.</strong> Written once, shipped as a progressive web app plus genuine App Store and Play Store builds. Capacitor rather than React Native because this app is fundamentally a beautifully typeset document reader — the web rendering engine is exactly the right tool for the job, and iPad gets its two-page spread almost for free.</p>
+
+<p>Local-first data in SQLite. A server is not needed to launch; add sync only when a madrasa asks to see several students in one place.</p>
+
+<p>
+<span class="pill">React + TypeScript</span><span class="pill">Vite</span><span class="pill">Capacitor</span><span class="pill">SQLite (local-first)</span><span class="pill">Web Audio API</span><span class="pill">QUL fonts + layout</span>
+</p>
+
+<h2>08 — Roadmap</h2>
+<p class="h2sub">Reader first, listener second, everything else after</p>
+
+<div class="phase">
+  <div class="phase-n">1</div>
+  <div class="phase-b">
+    <h4>The Mushaf</h4>
+    <p>All 604 pages in correct 16-line layout, tajwid colours, blur-and-reveal, fully offline. Nothing else. Get this flawless — a perfect reader with no features beats a rich app with wrong page breaks.</p>
+    <span class="ship">Ship to web first</span>
+  </div>
+</div>
+<div class="phase">
+  <div class="phase-n">2</div>
+  <div class="phase-b">
+    <h4>Listening mode</h4>
+    <p>One-tap marking, session recording, timestamped playback of every mistake, post-session review screen. This is the differentiator and it should arrive before qari audio.</p>
+    <span class="ship">Android + iOS beta</span>
+  </div>
+</div>
+<div class="phase">
+  <div class="phase-n">3</div>
+  <div class="phase-b">
+    <h4>Progress and revision</h4>
+    <p>Session history, weakness heat map, spaced-repetition revision queue, mutashabihat pairing, parent and teacher reports.</p>
+    <span class="ship">Public launch</span>
+  </div>
+</div>
+<div class="phase">
+  <div class="phase-n">4</div>
+  <div class="phase-b">
+    <h4>Audio and reach</h4>
+    <p>Multi-qari recitation with word highlighting, silence-based auto-detection of hesitations, multi-student classroom view, Urdu and Arabic interface.</p>
+    <span class="ship">Institutions</span>
+  </div>
+</div>
+
+<h2>09 — Two things that must be right</h2>
+<p class="h2sub">Get these wrong and nothing else matters</p>
+
+<h3>Peer listening must be free and frictionless</h3>
+<p>Students listen to one another constantly — that is where most listening actually happens, not in the teacher's hands. Support it with a simple session code, or purely local sessions with no account at all. Gate this behind institutional sign-up and the largest use case walks away.</p>
+
+<h3>Privacy, because these are children's voices</h3>
+<p>Recordings stay on the device by default. Explicit consent from the parent or teacher, visible retention controls, and no cloud upload unless someone deliberately turns it on. Build this in from day one — retrofitting it is painful, and a single incident would end the project.</p>
+
+<h2>10 — Open questions</h2>
+<p class="h2sub">Worth settling before code is written</p>
+
+<ul>
+  <li>Which printed edition is the reference — Taj Company, Muhammadi, or another 16-line Mushaf? Page breaks differ between them, and the wrong choice breaks the visual memory of every existing student.</li>
+  <li>Free forever, or free reader with paid teacher tools? A charitable free product reaches further; a small institutional fee funds maintenance.</li>
+  <li>Interface language at launch — English first, or English and Urdu together?</li>
+  <li>Does the first release target Zahid's son and his teacher only, or a wider beta from the start?</li>
+</ul>
+
+<div class="callout">
+  <span class="label">Recommended next step</span>
+  <p>Build a working prototype of listening mode alone — one real Mushaf page, tap-to-mark, live session timer, and the post-session review screen. Hand it to a student and a listener and watch whether the tapping actually survives a real recitation. That test will teach more than another month of planning.</p>
+</div>
+
+<footer>
+  Sabaq · Product brief, draft 1 · Prepared for Zahid, 14 August 2026<br>
+  Source material reviewed: <a href="https://garden4adam.wordpress.com/2020/10/05/pdf-quran-juz-16-line-in-color-with-tajwid/">PDF Quran Juz (16 Line) in colour with Tajwid — garden4adam</a>
+</footer>
+
+</div>
+</body>
+</html>
