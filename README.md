@@ -121,9 +121,9 @@ edition difference on page 363.
 
 If you find a mistake in the Quranic text or in the layout of a page:
 
-**corrections@quranforhifz.com**
+**WhatsApp [+92 333 553 1987](https://wa.me/923335531987)**
 
-The page number is enough — no GitHub account needed. An error in a Mushaf
+The page number is enough — a photo of the page is ideal, and no GitHub account is needed. An error in a Mushaf
 takes precedence over every feature request here.
 
 ## Author
