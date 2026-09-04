@@ -11,6 +11,36 @@ export const RULE_CLASS: Record<TajweedRule, string> = {
   madda_obligatory: 'md', madda_necessary: 'md',
 }
 
+/**
+ * Rule -> character, for the compact `marks` encoding in the database.
+ *
+ * The column used to hold JSON: a word with one rule on its first letter was
+ * stored as ["ham_wasl",null,null,null,null,null,null]. Across 83,668 words
+ * that came to 3.59 MB — most of a database that a reader on a phone has to
+ * download before a single word appears. The same word is now "h......".
+ *
+ * ORDER IS THE FORMAT. Appending a rule is safe; reordering or removing one
+ * silently re-labels every mark in the Mushaf, which would put the wrong
+ * tajweed colour on the wrong letter. Change it only by rebuilding the
+ * database with scripts/compact-db.js in the same commit.
+ */
+const RULE_CHARS: TajweedRule[] = [
+  'ghunnah', 'idgham_ghunnah', 'idgham_shafawi', 'ikhafa', 'ikhafa_shafawi',
+  'iqlab', 'qalaqah', 'slnt', 'ham_wasl', 'laam_shamsiyah', 'idgham_wo_ghunnah',
+  'idgham_mutajanisayn', 'idgham_mutaqaribayn', 'madda_normal',
+  'madda_permissible', 'madda_obligatory', 'madda_necessary',
+]
+
+/** '.' means no rule on that character. */
+export function decodeMarks(encoded: string | null): Marks | null {
+  if (!encoded) return null
+  const out: Marks = []
+  for (const ch of encoded) {
+    out.push(ch === '.' ? null : RULE_CHARS[ch.charCodeAt(0) - 97] ?? null)
+  }
+  return out
+}
+
 export interface Segment { text: string; cls: string | null }
 
 /**

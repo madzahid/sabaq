@@ -1,6 +1,7 @@
 import initSqlJs, { type Database } from 'sql.js'
 import { JUZ_START_PAGE } from '../data/juzStart'
 import type { Line, LineType, Marker, MarkerKind, Page, Word } from '../types'
+import { decodeMarks } from '../lib/tajweed'
 
 let db: Database | null = null
 
@@ -111,7 +112,8 @@ function toWord(r: Record<string, unknown>): Word {
       ? (r.text as string).replace(DIVISION_GLYPHS, '')
       : (r.text as string),
     isMarker: (r.is_marker as number) === 1,
-    marks: r.marks ? JSON.parse(r.marks as string) : null,
+    // Compact string, not JSON — see decodeMarks() and RULE_CHARS.
+    marks: decodeMarks(r.marks as string | null),
   }
 }
 

@@ -15,6 +15,14 @@
    the Mushaf's, and is applied to .sheet and to Urdu prose only — setting it
    on body made the English UI render in a Quranic typeface. */
 body {
+  /* Stop the browser's own horizontal swipe from claiming the gesture.
+     Chrome and Safari read a sideways drag as back/forward navigation, take
+     the touch away mid-swipe and fire touchcancel — which is why turning the
+     page worked in one direction and did nothing in the other. usePageTurn
+     now recovers from touchcancel as well, but not handing the gesture over
+     in the first place is the better fix. Vertical scrolling is untouched. */
+  overscroll-behavior-x: contain;
+  touch-action: pan-y pinch-zoom;
   margin: 0;
   background: var(--shell);
   color: var(--ink);

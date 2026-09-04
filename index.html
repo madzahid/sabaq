@@ -19,15 +19,18 @@
     <meta property="og:locale:alternate" content="ar_SA" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- The database is the critical path: nothing renders until it is parsed.
-         Without this the browser only discovers it after the JS has loaded and
-         run — about 1.4s in — so the two big downloads run one after the other
-         instead of together. -->
-    <!-- No crossorigin here, deliberately: on a same-origin as="fetch" preload
-         it would make this a CORS request, which would not match the plain
-         fetch() the app issues — and the browser would download the database
-         twice. The font preload does need it. -->
-    <link rel="preload" href="/data/quran.sqlite.gz" as="fetch" type="application/gzip" />
+    <!-- The DATABASE IS NOT PRELOADED, deliberately.
+
+         It was, and PageSpeed caught the result: quran.sqlite.gz appeared
+         TWICE in the payload, 1,346 KiB each, 2.6 MB of a 3.2 MB page. The
+         preload never matched the app's own request — open() reads the body as
+         a stream through DecompressionStream, and the browser treated that as
+         a different fetch — so the file was downloaded, discarded, and
+         downloaded again. On Slow 4G that was seconds of the LCP.
+
+         A preload that misses is worse than no preload at all. The font is
+         still preloaded: it is a plain <link>-style load with no such
+         mismatch, and it is small. -->
     <link rel="preload" href="/fonts/indopak-nastaleeq.ttf" as="font" type="font/ttf" crossorigin />
 
     <link rel="manifest" href="/manifest.webmanifest" />

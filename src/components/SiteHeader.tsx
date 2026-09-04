@@ -3,6 +3,7 @@ import { internalPage, juzIndex, printedPage, printedRange, surahIndex } from '.
 import { uiDigits } from '../i18n/digits'
 import { ENDONYM, LOCALES } from '../i18n/locale'
 import { SURAH_NAMES } from '../i18n/surahs'
+import { useCoarsePointer } from '../features/useCoarsePointer'
 import { useLocale } from '../i18n/useLocale'
 
 interface Props {
@@ -28,6 +29,7 @@ export default function SiteHeader({
   onTajweed,
 }: Props) {
   const { locale, t, setLocale } = useLocale()
+  const coarse = useCoarsePointer()
 
   // Cached after the first call — see surahIndex() in db/quran.ts.
   const surahs = surahIndex()
@@ -58,11 +60,23 @@ export default function SiteHeader({
         <span className="brand-en">for hifz</span>
       </a>
 
-      <nav className="site-nav" aria-label={t.nav.label}>
-        {/* Fixed glyphs, because .site-nav is pinned rtl in every language:
-            prev always sits on the right and points right, next on the left
-            pointing left — the direction the Mushaf actually turns. */}
-        <button onClick={() => onGo(pageNo - 1)} aria-label={t.nav.prev}>▶</button>
+      {/* The nav's direction depends on the INPUT DEVICE, not the language.
+
+          Mouse and keyboard follow the book: rtl, so the next page is to the
+          left, matching ArrowLeft and the way a Mushaf turns.
+
+          A finger follows the hand: ltr, because the swipe advances by
+          dragging the page rightwards. The buttons then agree with the thumb.
+          See useCoarsePointer.ts and usePageTurn.ts — the three have to move
+          together or the reader trusts none of them. */}
+      <nav
+        className="site-nav"
+        aria-label={t.nav.label}
+        style={{ direction: coarse ? 'ltr' : 'rtl' }}
+      >
+        <button onClick={() => onGo(pageNo - 1)} aria-label={t.nav.prev}>
+          {coarse ? '◀' : '▶'}
+        </button>
 
         {/* A student says "Surah Yaseen" or "para 30", not "page 396". Surah
             names stay Arabic here for the same reason they do on the page. */}
@@ -113,7 +127,9 @@ export default function SiteHeader({
           <span className="of">/ {uiDigits(lastPrinted, locale)}</span>
         </label>
 
-        <button onClick={() => onGo(pageNo + 1)} aria-label={t.nav.next}>◀</button>
+        <button onClick={() => onGo(pageNo + 1)} aria-label={t.nav.next}>
+          {coarse ? '▶' : '◀'}
+        </button>
       </nav>
 
       <div className="site-actions">
