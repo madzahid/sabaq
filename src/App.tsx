@@ -3,6 +3,7 @@ import { PAGE_COUNT, getPage, open } from './db/quran'
 import { useHifzMode } from './features/useHifzMode'
 import { useListening } from './features/useListening'
 import { usePageTurn } from './features/usePageTurn'
+import { useSheetZoom } from './features/useSheetZoom'
 import { useLocale } from './i18n/useLocale'
 import { loadLastPage, saveLastPage } from './lib/lastPage'
 import { readPageFromUrl, writePageToUrl } from './lib/url'
@@ -31,6 +32,7 @@ export default function App() {
   const hifz = useHifzMode()
   const listening = useListening()
   const web = isWeb()
+  useSheetZoom()
 
   useEffect(() => {
     open()
