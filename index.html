@@ -19,6 +19,17 @@
     <meta property="og:locale:alternate" content="ar_SA" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <!-- The database is the critical path: nothing renders until it is parsed.
+         Without this the browser only discovers it after the JS has loaded and
+         run — about 1.4s in — so the two big downloads run one after the other
+         instead of together. -->
+    <!-- No crossorigin here, deliberately: on a same-origin as="fetch" preload
+         it would make this a CORS request, which would not match the plain
+         fetch() the app issues — and the browser would download the database
+         twice. The font preload does need it. -->
+    <link rel="preload" href="/data/quran.sqlite.gz" as="fetch" type="application/gzip" />
+    <link rel="preload" href="/fonts/indopak-nastaleeq.ttf" as="font" type="font/ttf" crossorigin />
+
     <link rel="manifest" href="/manifest.webmanifest" />
 
     <!-- .ico carries 16/32/48/64 for browsers and bookmark bars; the SVG is
