@@ -39,7 +39,7 @@ body {
    with it — otherwise the buttons disagree with the arrow keys and the swipe. */
 .site-nav {
   display: flex; align-items: center; gap: 7px;
-  margin-inline-start: auto; direction: rtl;
+  direction: rtl;
 }
 .site-nav button, .site-actions button {
   cursor: pointer; font: inherit; font-size: 13px; font-weight: 600;
@@ -72,7 +72,15 @@ body {
 /* The open menu is drawn by the OS on light chrome, so it needs dark text. */
 .jump select option { color: var(--ink); background: var(--paper); }
 
-.site-actions { display: flex; align-items: center; gap: 9px; }
+/* The auto margin that splits the header lives HERE, not on .site-nav.
+   .site-nav pins its own direction to rtl so the page-turn arrows always match
+   the Mushaf — and a logical property resolves against the element's OWN
+   direction, so margin-inline-start:auto on it meant margin-right:auto in
+   every language. In English that looked right by accident; in Urdu and Arabic
+   it shoved the nav away from the wordmark instead of up against it.
+   .site-actions has no direction of its own, so it inherits the page's and
+   mirrors properly. */
+.site-actions { display: flex; align-items: center; gap: 9px; margin-inline-start: auto; }
 .count { font-size: 12px; padding: 4px 10px; border-radius: 20px; background: rgba(255,255,255,.13); }
 /* Same relationship as the marks on the page: luqma heavier, atakna lighter. */
 .count.luqma  { background: var(--mark-line); color: #3d2c00; }
@@ -349,9 +357,11 @@ html[lang="ur"] .foot-sub {
   /* Navigation drops to its own full-width row rather than being squeezed
      next to the brand — on a phone this is the control used most. */
   .site-nav {
-    order: 3; width: 100%; margin-inline-start: 0;
+    order: 3; width: 100%;
     justify-content: center; padding-top: 8px;
   }
+  /* Full-width nav row below, so nothing needs pushing apart. */
+  .site-actions { margin-inline-start: 0; }
   .jump select { max-width: 112px; font-size: 12px; padding: 5px 6px; }
   .pagebox input { width: 52px; }
   .site-actions { gap: 6px; }
